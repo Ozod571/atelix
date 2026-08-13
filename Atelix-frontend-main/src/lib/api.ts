@@ -47,13 +47,11 @@ export const errMsg = (e: unknown): string => {
 // ─── AUTH ────────────────────────────────────────────────────────────────────
 export const authApi = {
   register: (d: {
-    name: string; email: string; password: string;
-    phone?: string; role?: "customer" | "tailor";
-    shopName?: string; city?: string; bio?: string;
-    experienceYears?: number; priceFrom?: number;
+    name: string; phone: string; password: string;
+    role?: "customer" | "tailor"; email?: string;
   }) => api.post("/auth/register", d).then((r) => r.data),
 
-  login: (d: { email: string; password: string }) =>
+  login: (d: { phone: string; password: string }) =>
     api.post("/auth/login", d).then((r) => r.data),
 
   me: () => api.get("/auth/me").then((r) => r.data),

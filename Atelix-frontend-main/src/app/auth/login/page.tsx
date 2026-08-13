@@ -10,17 +10,18 @@ import Logo from "@/components/Logo";
 export default function LoginPage() {
   const router = useRouter();
   const { login, isLoading } = useAuth();
-  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
+  const [showPw, setShowPw] = useState(false);
 
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!email || !password) {
-      toast.error("Email va parolni kiriting");
+    if (!phone.trim() || !password) {
+      toast.error("Telefon va parolni kiriting");
       return;
     }
     try {
-      const user = await login(email, password);
+      const user = await login(phone, password);
       toast.success("Xush kelibsiz!");
       router.push(user.role === "tailor" ? "/tailor" : "/dashboard");
     } catch (e) {
@@ -36,35 +37,45 @@ export default function LoginPage() {
         </Link>
 
         <div className="card">
-          <h1 className="text-2xl font-semibold tracking-tight">Tizimga kirish</h1>
-          <p className="mt-1 text-sm text-ink-500">Email va parolingiz bilan kiring.</p>
+          <h1 className="font-display text-2xl font-semibold tracking-tight">Tizimga kirish</h1>
+          <p className="mt-1 text-sm text-ink-500">Telefon raqamingiz bilan kiring.</p>
 
           <form onSubmit={submit} className="mt-6 space-y-4">
             <div>
-              <label htmlFor="email" className="label">Email</label>
+              <label htmlFor="phone" className="label">Telefon raqam</label>
               <input
-                id="email"
-                type="email"
+                id="phone"
+                type="tel"
+                inputMode="tel"
                 className="input"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="ali@example.com"
-                autoComplete="email"
+                value={phone}
+                onChange={(e) => setPhone(e.target.value)}
+                placeholder="+998 90 123 45 67"
+                autoComplete="tel"
                 required
               />
             </div>
             <div>
               <label htmlFor="password" className="label">Parol</label>
-              <input
-                id="password"
-                type="password"
-                className="input"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                placeholder="••••••••"
-                autoComplete="current-password"
-                required
-              />
+              <div className="relative">
+                <input
+                  id="password"
+                  type={showPw ? "text" : "password"}
+                  className="input pr-16"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  placeholder="••••••••"
+                  autoComplete="current-password"
+                  required
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPw((s) => !s)}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-xs font-medium text-ink-500 hover:text-ink-900"
+                >
+                  {showPw ? "Yashirish" : "Ko'rsatish"}
+                </button>
+              </div>
             </div>
             <button type="submit" disabled={isLoading} className="btn-primary w-full py-3">
               {isLoading ? "Kirilmoqda..." : "Kirish"}
@@ -73,7 +84,7 @@ export default function LoginPage() {
 
           <p className="mt-6 text-center text-sm text-ink-600">
             Hisobingiz yo'qmi?{" "}
-            <Link href="/auth/register" className="font-medium text-ink-900 underline underline-offset-2">
+            <Link href="/auth/register" className="font-medium text-accent underline underline-offset-2">
               Ro'yxatdan o'ting
             </Link>
           </p>

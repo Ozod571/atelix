@@ -86,6 +86,14 @@ initSocket(io);
 async function start(uri = MONGODB_URI, port = PORT) {
   await mongoose.connect(uri);
   console.log("✅ MongoDB ulandi");
+
+  // Eski (email asosidagi) noyoblik indeksini olib tashlaymiz — endi telefon asosiy
+  try {
+    await mongoose.connection.collection("users").dropIndex("email_1");
+    console.log("🧹 Eski email indeksi olib tashlandi");
+  } catch (e) {
+    /* indeks yo'q bo'lsa — muammo emas */
+  }
   await new Promise((resolve) => {
     server.listen(port, "0.0.0.0", () => {
       console.log(`🚀 Atelix API + WebSocket: http://localhost:${port}`);

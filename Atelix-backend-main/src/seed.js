@@ -21,29 +21,26 @@ async function run() {
   await Review.deleteMany({});
   console.log("🧹 Eski ma'lumotlar tozalandi");
 
-  // Mijozlar
+  // Mijozlar (telefon — asosiy identifikator, 998XXXXXXXXX)
   const ali = await User.create({
     name: "Ali Karimov",
-    email: "ali@example.com",
+    phone: "998901112233",
     password: "parol123",
-    phone: "+998901112233",
     role: "customer",
   });
 
   const dilnoza = await User.create({
     name: "Dilnoza Yusupova",
-    email: "dilnoza@example.com",
+    phone: "998904445566",
     password: "parol123",
-    phone: "+998904445566",
     role: "customer",
   });
 
   // Tikuvchilar
   const aziza = await User.create({
     name: "Aziza opa",
-    email: "aziza@atelix.uz",
+    phone: "998907778899",
     password: "parol123",
-    phone: "+998907778899",
     role: "tailor",
     shopName: "Aziza Atelye",
     city: "Toshkent, Chilonzor",
@@ -54,9 +51,8 @@ async function run() {
 
   const sherzod = await User.create({
     name: "Sherzod aka",
-    email: "sherzod@atelix.uz",
+    phone: "998901234567",
     password: "parol123",
-    phone: "+998901234567",
     role: "tailor",
     shopName: "Elite Suit",
     city: "Toshkent, Yunusobod",
@@ -68,7 +64,7 @@ async function run() {
   // Admin
   await User.create({
     name: "Admin",
-    email: "admin@atelix.uz",
+    phone: "998900000000",
     password: "admin123",
     role: "admin",
   });
@@ -147,15 +143,15 @@ async function run() {
   });
   await Review.recomputeTailorRating(aziza._id);
 
-  console.log("\n✅ Sample ma'lumotlar yaratildi:\n");
+  console.log("\n✅ Sample ma'lumotlar yaratildi (telefon + parol):\n");
   console.log("👤 Mijozlar:");
-  console.log("   ali@example.com / parol123");
-  console.log("   dilnoza@example.com / parol123");
+  console.log("   +998 90 111 22 33 / parol123");
+  console.log("   +998 90 444 55 66 / parol123");
   console.log("✂️  Tikuvchilar:");
-  console.log("   aziza@atelix.uz / parol123");
-  console.log("   sherzod@atelix.uz / parol123");
+  console.log("   +998 90 777 88 99 / parol123");
+  console.log("   +998 90 123 45 67 / parol123");
   console.log("👑 Admin:");
-  console.log("   admin@atelix.uz / admin123\n");
+  console.log("   +998 90 000 00 00 / admin123\n");
 
   await mongoose.disconnect();
   process.exit(0);

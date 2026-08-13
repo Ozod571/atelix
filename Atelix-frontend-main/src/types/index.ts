@@ -5,8 +5,8 @@ export type Role = "customer" | "tailor" | "admin";
 export interface User {
   _id: string;
   name: string;
-  email: string;
-  phone?: string;
+  phone: string;
+  email?: string;
   role: Role;
   shopName?: string;
   city?: string;

@@ -13,10 +13,16 @@ const userSchema = new mongoose.Schema(
       minlength: [2, "Ism kamida 2 ta belgi bo'lishi kerak"],
       maxlength: [80, "Ism juda uzun"],
     },
+    // Endi asosiy identifikator — telefon raqami (998XXXXXXXXX)
+    phone: {
+      type: String,
+      required: [true, "Telefon raqami majburiy"],
+      trim: true,
+      index: true,
+    },
+    // Email ixtiyoriy (majburiy emas, noyoblik talab qilinmaydi)
     email: {
       type: String,
-      required: [true, "Email majburiy"],
-      unique: true,
       lowercase: true,
       trim: true,
       match: [/^\S+@\S+\.\S+$/, "Email noto'g'ri formatda"],
@@ -26,10 +32,6 @@ const userSchema = new mongoose.Schema(
       required: [true, "Parol majburiy"],
       minlength: [6, "Parol kamida 6 ta belgi bo'lishi kerak"],
       select: false,
-    },
-    phone: {
-      type: String,
-      trim: true,
     },
     role: {
       type: String,

@@ -9,44 +9,36 @@ import Logo from "@/components/Logo";
 
 type Role = "customer" | "tailor";
 
+const ROLES: { value: Role; title: string; desc: string; icon: string }[] = [
+  { value: "customer", title: "Mijoz", desc: "Kiyim buyurtma qilaman", icon: "🧍" },
+  { value: "tailor", title: "Tikuvchi", desc: "Kiyim tikaman", icon: "✂️" },
+];
+
 export default function RegisterPage() {
   const router = useRouter();
   const { register, isLoading } = useAuth();
 
   const [role, setRole] = useState<Role>("customer");
   const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const [phone, setPhone] = useState("");
-  const [shopName, setShopName] = useState("");
-  const [city, setCity] = useState("");
-  const [bio, setBio] = useState("");
-  const [experienceYears, setExperienceYears] = useState("");
-  const [priceFrom, setPriceFrom] = useState("");
+  const [password, setPassword] = useState("");
+  const [showPw, setShowPw] = useState(false);
 
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!name || !email || !password) {
-      toast.error("Barcha asosiy maydonlarni to'ldiring");
-      return;
-    }
-    if (password.length < 6) {
-      toast.error("Parol kamida 6 ta belgi bo'lishi kerak");
-      return;
-    }
+    if (!name.trim()) return toast.error("Ismingizni kiriting");
+    if (!phone.trim()) return toast.error("Telefon raqamingizni kiriting");
+    if (password.length < 6) return toast.error("Parol kamida 6 ta belgi bo'lishi kerak");
+
     try {
-      const user = await register({
-        name, email, password, phone, role,
-        ...(role === "tailor"
-          ? {
-              shopName, city, bio,
-              experienceYears: experienceYears ? Number(experienceYears) : undefined,
-              priceFrom: priceFrom ? Number(priceFrom) : undefined,
-            }
-          : {}),
-      });
-      toast.success("Hisob muvaffaqiyatli yaratildi");
-      router.push(user.role === "tailor" ? "/tailor" : "/dashboard");
+      const user = await register({ name, phone, password, role });
+      if (user.role === "tailor") {
+        toast.success("Xush kelibsiz! Endi profilingizni to'ldiring.");
+        router.push("/tailor/profile");
+      } else {
+        toast.success("Hisob yaratildi!");
+        router.push("/dashboard");
+      }
     } catch (e) {
       toast.error(errMsg(e));
     }
@@ -60,21 +52,25 @@ export default function RegisterPage() {
         </Link>
 
         <div className="card">
-          <h1 className="text-2xl font-semibold tracking-tight">Hisob yaratish</h1>
-          <p className="mt-1 text-sm text-ink-500">Kim sifatida ro'yxatdan o'tasiz?</p>
+          <h1 className="font-display text-2xl font-semibold tracking-tight">Hisob yaratish</h1>
+          <p className="mt-1 text-sm text-ink-500">Telefon raqamingiz bilan bir daqiqada.</p>
 
-          {/* Role selector */}
-          <div className="mt-4 grid grid-cols-2 gap-2 rounded-xl bg-ink-100 p-1">
-            {(["customer", "tailor"] as Role[]).map((r) => (
+          {/* Rol tanlash — katta, tushunarli kartalar */}
+          <div className="mt-5 grid grid-cols-2 gap-3">
+            {ROLES.map((r) => (
               <button
-                key={r}
+                key={r.value}
                 type="button"
-                onClick={() => setRole(r)}
-                className={`rounded-lg px-3 py-2 text-sm font-medium transition ${
-                  role === r ? "bg-surface text-ink-900 shadow-sm" : "text-ink-600 hover:text-ink-900"
+                onClick={() => setRole(r.value)}
+                className={`rounded-2xl border p-4 text-left transition ${
+                  role === r.value
+                    ? "border-accent bg-accent/5 ring-1 ring-accent"
+                    : "border-ink-200 hover:border-ink-400"
                 }`}
               >
-                {r === "customer" ? "Mijoz" : "Tikuvchi"}
+                <div className="text-2xl">{r.icon}</div>
+                <div className="mt-2 font-semibold text-ink-900">{r.title}</div>
+                <div className="text-xs text-ink-500">{r.desc}</div>
               </button>
             ))}
           </div>
@@ -87,112 +83,63 @@ export default function RegisterPage() {
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 placeholder="Ali Karimov"
-                required
-              />
-            </div>
-            <div>
-              <label className="label">Email</label>
-              <input
-                type="email"
-                className="input"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="email@example.com"
-                autoComplete="email"
-                required
-              />
-            </div>
-            <div>
-              <label className="label">Telefon (ixtiyoriy)</label>
-              <input
-                type="tel"
-                className="input"
-                value={phone}
-                onChange={(e) => setPhone(e.target.value)}
-                placeholder="+998 90 123 45 67"
-              />
-            </div>
-            <div>
-              <label className="label">Parol</label>
-              <input
-                type="password"
-                className="input"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                placeholder="Kamida 6 ta belgi"
-                autoComplete="new-password"
-                minLength={6}
+                autoComplete="name"
                 required
               />
             </div>
 
-            {role === "tailor" && (
-              <>
-                <div>
-                  <label className="label">Atelye nomi</label>
-                  <input
-                    className="input"
-                    value={shopName}
-                    onChange={(e) => setShopName(e.target.value)}
-                    placeholder="Aziza Atelye"
-                  />
-                </div>
-                <div>
-                  <label className="label">Shahar / manzil</label>
-                  <input
-                    className="input"
-                    value={city}
-                    onChange={(e) => setCity(e.target.value)}
-                    placeholder="Toshkent, Chilonzor"
-                  />
-                </div>
-                <div className="grid grid-cols-2 gap-3">
-                  <div>
-                    <label className="label">Tajriba (yil)</label>
-                    <input
-                      type="number"
-                      min={0}
-                      max={80}
-                      className="input"
-                      value={experienceYears}
-                      onChange={(e) => setExperienceYears(e.target.value)}
-                      placeholder="Masalan: 10"
-                    />
-                  </div>
-                  <div>
-                    <label className="label">Narx (so'mdan)</label>
-                    <input
-                      type="number"
-                      min={0}
-                      step={1000}
-                      className="input"
-                      value={priceFrom}
-                      onChange={(e) => setPriceFrom(e.target.value)}
-                      placeholder="Masalan: 250000"
-                    />
-                  </div>
-                </div>
-                <div>
-                  <label className="label">Qisqacha ma'lumot (bio)</label>
-                  <textarea
-                    className="input min-h-[80px] resize-y"
-                    maxLength={500}
-                    value={bio}
-                    onChange={(e) => setBio(e.target.value)}
-                    placeholder="Qanday kiyimlar tikasiz, mutaxassisligingiz..."
-                  />
-                </div>
-              </>
-            )}
+            <div>
+              <label className="label">Telefon raqam</label>
+              <input
+                type="tel"
+                inputMode="tel"
+                className="input"
+                value={phone}
+                onChange={(e) => setPhone(e.target.value)}
+                placeholder="+998 90 123 45 67"
+                autoComplete="tel"
+                required
+              />
+              <p className="helper">Shu raqam bilan tizimga kirasiz.</p>
+            </div>
+
+            <div>
+              <label className="label">Parol</label>
+              <div className="relative">
+                <input
+                  type={showPw ? "text" : "password"}
+                  className="input pr-16"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  placeholder="Kamida 6 ta belgi"
+                  autoComplete="new-password"
+                  minLength={6}
+                  required
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPw((s) => !s)}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-xs font-medium text-ink-500 hover:text-ink-900"
+                >
+                  {showPw ? "Yashirish" : "Ko'rsatish"}
+                </button>
+              </div>
+            </div>
 
             <button type="submit" disabled={isLoading} className="btn-primary w-full py-3">
               {isLoading ? "Yaratilmoqda..." : "Hisob yaratish"}
             </button>
           </form>
 
+          {role === "tailor" && (
+            <p className="mt-4 rounded-xl bg-ink-100 px-4 py-3 text-xs text-ink-600">
+              Ro'yxatdan o'tgach, do'kon nomi, narx va ish namunalaringizni profil sahifasida qo'shasiz.
+            </p>
+          )}
+
           <p className="mt-6 text-center text-sm text-ink-600">
             Hisobingiz bormi?{" "}
-            <Link href="/auth/login" className="font-medium text-ink-900 underline underline-offset-2">
+            <Link href="/auth/login" className="font-medium text-accent underline underline-offset-2">
               Kirish
             </Link>
           </p>

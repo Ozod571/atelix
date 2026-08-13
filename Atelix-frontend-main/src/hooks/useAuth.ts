@@ -12,12 +12,10 @@ interface AuthState {
   initialized: boolean;
 
   bootstrap: () => void;
-  login: (email: string, password: string) => Promise<User>;
+  login: (phone: string, password: string) => Promise<User>;
   register: (data: {
-    name: string; email: string; password: string;
-    phone?: string; role?: "customer" | "tailor";
-    shopName?: string; city?: string; bio?: string;
-    experienceYears?: number; priceFrom?: number;
+    name: string; phone: string; password: string;
+    role?: "customer" | "tailor"; email?: string;
   }) => Promise<User>;
   logout: () => void;
   refresh: () => Promise<void>;
@@ -57,10 +55,10 @@ export const useAuth = create<AuthState>((set, get) => ({
     set({ initialized: true });
   },
 
-  login: async (email, password) => {
+  login: async (phone, password) => {
     set({ isLoading: true });
     try {
-      const data = await authApi.login({ email, password });
+      const data = await authApi.login({ phone, password });
       persist(data.token, data.user);
       set({ user: data.user, token: data.token });
       return data.user;

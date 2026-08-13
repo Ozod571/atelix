@@ -6,6 +6,7 @@ const jwt = require("jsonwebtoken");
 const User = require("../models/User");
 const { protect, JWT_SECRET } = require("../middleware/auth");
 const { isDataImage } = require("../utils/image");
+const { normalizePhone, isValidUzPhone } = require("../utils/phone");
 
 const router = express.Router();
 const JWT_EXPIRES = process.env.JWT_EXPIRES || "30d";
@@ -20,42 +21,37 @@ const respond = (res, status, user) =>
     user,
   });
 
-// ─── REGISTER ────────────────────────────────────────────────────────────────
+// ─── REGISTER (telefon + parol) ───────────────────────────────────────────────
 router.post("/register", async (req, res, next) => {
   try {
-    const { name, email, password, phone, role, shopName, city, bio, experienceYears, priceFrom } = req.body;
+    const { name, password, phone, role, email } = req.body;
 
-    if (!name || !email || !password) {
-      return res.status(400).json({ error: "Ism, email va parol kiriting" });
+    if (!name || !phone || !password) {
+      return res.status(400).json({ error: "Ism, telefon va parol kiriting" });
     }
     if (password.length < 6) {
       return res.status(400).json({ error: "Parol kamida 6 ta belgi bo'lishi kerak" });
     }
 
-    const requestedRole = role === "tailor" ? "tailor" : "customer";
-
-    const exists = await User.findOne({ email: email.toLowerCase() });
-    if (exists) {
-      return res.status(409).json({ error: "Bu email allaqachon ro'yxatdan o'tgan" });
+    const nphone = normalizePhone(phone);
+    if (!isValidUzPhone(nphone)) {
+      return res.status(400).json({ error: "Telefon raqamini to'g'ri kiriting (masalan +998 90 123 45 67)" });
     }
 
-    const isTailor = requestedRole === "tailor";
-    const toNum = (v) => {
-      const n = Number(v);
-      return Number.isNaN(n) ? undefined : n;
-    };
+    const requestedRole = role === "tailor" ? "tailor" : "customer";
+
+    const exists = await User.findOne({ phone: nphone });
+    if (exists) {
+      return res.status(409).json({ error: "Bu telefon raqami allaqachon ro'yxatdan o'tgan" });
+    }
 
     const user = await User.create({
       name: name.trim(),
-      email: email.toLowerCase().trim(),
+      phone: nphone,
       password,
-      phone: phone?.trim(),
       role: requestedRole,
-      shopName: isTailor ? shopName?.trim() : undefined,
-      city: isTailor ? city?.trim() : undefined,
-      bio: isTailor ? bio?.trim() : undefined,
-      experienceYears: isTailor ? toNum(experienceYears) : undefined,
-      priceFrom: isTailor ? toNum(priceFrom) : undefined,
+      email: email ? email.toLowerCase().trim() : undefined,
+      // Tikuvchi qo'shimcha ma'lumotlarni keyin profil sahifasida to'ldiradi
     });
 
     respond(res, 201, user);
@@ -68,17 +64,23 @@ router.post("/register", async (req, res, next) => {
   }
 });
 
-// ─── LOGIN ───────────────────────────────────────────────────────────────────
+// ─── LOGIN (telefon + parol; email bilan ham ishlaydi) ─────────────────────────
 router.post("/login", async (req, res, next) => {
   try {
-    const { email, password } = req.body;
-    if (!email || !password) {
-      return res.status(400).json({ error: "Email va parol kiriting" });
+    const { phone, email, password } = req.body;
+    const identifier = phone || email;
+    if (!identifier || !password) {
+      return res.status(400).json({ error: "Telefon va parol kiriting" });
     }
 
-    const user = await User.findOne({ email: email.toLowerCase() }).select("+password");
+    // '@' bo'lsa email, aks holda telefon
+    const query = String(identifier).includes("@")
+      ? { email: String(identifier).toLowerCase().trim() }
+      : { phone: normalizePhone(identifier) };
+
+    const user = await User.findOne(query).select("+password");
     if (!user || !(await user.comparePassword(password))) {
-      return res.status(401).json({ error: "Email yoki parol noto'g'ri" });
+      return res.status(401).json({ error: "Telefon yoki parol noto'g'ri" });
     }
     if (!user.isActive) {
       return res.status(403).json({ error: "Hisob bloklangan" });
