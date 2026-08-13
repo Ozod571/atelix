@@ -1,0 +1,28 @@
+# Bog'liqliklar
+node_modules/
+*/node_modules/
+
+# Build natijalari
+.next/
+*/.next/
+dist/
+build/
+
+# Muhit sirlari — HECH QACHON commit qilmang
+.env
+.env.*
+!.env.example
+*/.env
+*/.env.*
+!*/.env.example
+
+# Loglar
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS / muharrir
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
