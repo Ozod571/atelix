@@ -7,42 +7,42 @@
 :root {
   --font-inter: 'Inter', system-ui, sans-serif;
 
-  /* Iliq atelier palitrasi (RGB kanallar) — YORUG' rejim
-     Neytrallar biroz iliq (krem/bej), urg'u — terrakota */
-  --ink-50: 247 243 236;   /* krem sahifa foni */
-  --ink-100: 241 235 225;
-  --ink-200: 230 220 206;  /* iliq chegara */
-  --ink-300: 213 200 182;
-  --ink-400: 168 155 140;
-  --ink-500: 122 110 98;
-  --ink-600: 90 80 70;
-  --ink-700: 61 53 46;
-  --ink-800: 43 37 32;
-  --ink-900: 33 28 24;     /* iliq to'q jigarrang (matn) */
-  --surface: 255 252 247;  /* iliq oq karta */
-  --surface-2: 250 245 237;
-  --accent: 181 97 63;     /* terrakota #b5613f */
-  --accent-600: 158 82 51;
+  /* Zamonaviy minimal palitra (RGB kanallar) — YORUG' rejim
+     Sovuq neytral kulranglar, urg'u — indigo */
+  --ink-50: 248 249 251;   /* sahifa foni (juda och kulrang) */
+  --ink-100: 243 244 247;
+  --ink-200: 228 231 236;  /* chegara */
+  --ink-300: 209 213 220;
+  --ink-400: 156 163 175;
+  --ink-500: 107 114 128;
+  --ink-600: 75 85 99;
+  --ink-700: 55 65 81;
+  --ink-800: 31 41 55;
+  --ink-900: 17 24 39;     /* deyarli qora (sovuq) matn */
+  --surface: 255 255 255;  /* oq karta */
+  --surface-2: 249 250 251;
+  --accent: 79 70 229;     /* indigo #4f46e5 */
+  --accent-600: 67 56 202; /* indigo-700 */
   --accent-fg: 255 255 255;
 }
 
 .dark {
-  /* QORONG'I rejim — iliq ko'mir ohang */
-  --ink-50: 24 21 18;
-  --ink-100: 33 29 25;
-  --ink-200: 50 44 39;
-  --ink-300: 68 60 53;
-  --ink-400: 130 119 108;
-  --ink-500: 160 147 135;
-  --ink-600: 194 183 172;
-  --ink-700: 216 208 199;
-  --ink-800: 234 228 221;
-  --ink-900: 246 241 234;
-  --surface: 31 27 23;
-  --surface-2: 40 35 30;
-  --accent: 205 126 89;    /* qorong'ida biroz yorug'roq terrakota */
-  --accent-600: 216 140 104;
-  --accent-fg: 28 20 15;
+  /* QORONG'I rejim — sovuq to'q slate */
+  --ink-50: 15 17 21;      /* sahifa foni #0f1115 */
+  --ink-100: 22 25 31;
+  --ink-200: 38 42 51;     /* chegara */
+  --ink-300: 55 61 73;
+  --ink-400: 118 126 141;
+  --ink-500: 148 155 168;
+  --ink-600: 181 187 198;
+  --ink-700: 208 213 221;
+  --ink-800: 230 233 238;
+  --ink-900: 244 246 249;
+  --surface: 22 25 31;     /* karta #16191f */
+  --surface-2: 29 33 41;
+  --accent: 129 140 248;   /* indigo-400 (qorong'ida yorug'roq) */
+  --accent-600: 165 180 252;
+  --accent-fg: 17 20 27;
 }
 
 * {
@@ -63,11 +63,12 @@ html, body {
   text-rendering: optimizeLegibility;
 }
 
-/* Sarlavhalar uchun nafis serif shrift (Fraunces) */
+/* Sarlavhalar uchun zamonaviy sans shrift (Manrope) — dadil, tor tracking */
 @layer base {
   h1, h2, h3, .font-display {
-    font-family: var(--font-display), 'Fraunces', Georgia, serif;
-    letter-spacing: -0.015em;
+    font-family: var(--font-display), 'Manrope', 'Inter', system-ui, sans-serif;
+    font-weight: 800;
+    letter-spacing: -0.025em;
   }
 }
 
@@ -123,7 +124,7 @@ input[type="number"] { -moz-appearance: textfield; }
     @apply mt-1 text-xs text-ink-500;
   }
   .card {
-    @apply rounded-2xl bg-surface ring-1 ring-ink-200/60 p-6 shadow-[0_1px_2px_rgba(60,45,35,0.04),0_10px_30px_-16px_rgba(70,50,35,0.18)];
+    @apply rounded-2xl bg-surface ring-1 ring-ink-200/70 p-6 shadow-[0_1px_2px_rgba(16,24,40,0.04),0_8px_24px_-14px_rgba(16,24,40,0.12)];
   }
   .badge {
     @apply inline-flex items-center rounded-full px-2.5 py-1 text-xs font-medium ring-1 ring-inset;

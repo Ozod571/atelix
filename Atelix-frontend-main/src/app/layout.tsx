@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, Fraunces } from "next/font/google";
+import { Inter, Manrope } from "next/font/google";
 import { Toaster } from "react-hot-toast";
 import "./globals.css";
 
@@ -9,10 +9,10 @@ const inter = Inter({
   display: "swap",
 });
 
-// Nafis serif — sarlavhalar uchun (iliq atelier uslubi)
-const fraunces = Fraunces({
+// Zamonaviy sans — sarlavhalar uchun (minimal tech uslubi)
+const manrope = Manrope({
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
+  weight: ["500", "600", "700", "800"],
   variable: "--font-display",
   display: "swap",
 });
@@ -50,7 +50,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="uz" className={`${inter.variable} ${fraunces.variable}`} suppressHydrationWarning>
+    <html lang="uz" className={`${inter.variable} ${manrope.variable}`} suppressHydrationWarning>
       <head>
         {/* Mavzuni bo'yashdan oldin o'rnatish — miltillashning oldini oladi */}
         <script

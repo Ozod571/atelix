@@ -6,7 +6,7 @@ module.exports = {
     extend: {
       fontFamily: {
         sans: ["var(--font-inter)", "Inter", "system-ui", "sans-serif"],
-        display: ["var(--font-display)", "Fraunces", "Georgia", "serif"],
+        display: ["var(--font-display)", "Manrope", "Inter", "system-ui", "sans-serif"],
       },
       colors: {
         // CSS o'zgaruvchilariga asoslangan palitra — dark rejimda avtomatik almashadi

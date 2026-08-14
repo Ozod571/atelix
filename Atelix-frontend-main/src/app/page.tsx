@@ -27,7 +27,7 @@ export default function HomePage() {
             WebkitMaskImage: "radial-gradient(ellipse 60% 50% at 50% 0%, #000 50%, transparent 100%)",
           }}
         />
-        <div className="absolute -top-40 left-1/2 -z-10 h-[500px] w-[800px] -translate-x-1/2 rounded-full bg-gradient-to-r from-amber-100/40 via-rose-100/30 to-orange-100/40 blur-3xl" />
+        <div className="absolute -top-40 left-1/2 -z-10 h-[500px] w-[800px] -translate-x-1/2 rounded-full bg-gradient-to-r from-indigo-200/40 via-violet-200/30 to-sky-200/40 blur-3xl" />
 
         <div className="mx-auto max-w-6xl px-4 sm:px-6 pt-20 pb-32 sm:pt-32 sm:pb-44 text-center">
           <div className="inline-flex items-center gap-2 rounded-full border border-ink-200 bg-surface/70 backdrop-blur px-4 py-1.5 text-xs font-medium text-ink-700 shadow-sm">
@@ -215,7 +215,7 @@ export default function HomePage() {
                 backgroundSize: "40px 40px",
               }}
             />
-            <div className="absolute -top-32 left-1/2 h-64 w-96 -translate-x-1/2 rounded-full bg-amber-200/10 blur-3xl" />
+            <div className="absolute -top-32 left-1/2 h-64 w-96 -translate-x-1/2 rounded-full bg-indigo-400/15 blur-3xl" />
 
             <div className="relative">
               <h2 className="text-4xl sm:text-6xl font-semibold tracking-tight text-white">
