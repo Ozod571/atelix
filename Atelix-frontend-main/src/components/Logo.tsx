@@ -3,18 +3,23 @@
 interface Props {
   withText?: boolean;
   className?: string;
-    size?: number;
+  size?: number;
 }
 
 export function LogoMark({ size = 34 }: { size?: number }) {
   return (
     <span
-      className="inline-flex items-center justify-center rounded-xl bg-accent text-accent-fg shadow-sm"
-      style={{ width: size, height: size }}
+      className="bg-grad inline-flex items-center justify-center text-accent-fg"
+      style={{
+        width: size,
+        height: size,
+        borderRadius: size * 0.3,
+        boxShadow: "0 4px 14px rgb(var(--accent) / 0.4)",
+      }}
     >
       <svg
-        width={size * 0.6}
-        height={size * 0.6}
+        width={size * 0.58}
+        height={size * 0.58}
         viewBox="0 0 24 24"
         fill="none"
         stroke="currentColor"
@@ -34,7 +39,7 @@ export default function Logo({ withText = true, className = "", size = 34 }: Pro
     <span className={`inline-flex items-center gap-2.5 ${className}`}>
       <LogoMark size={size} />
       {withText && (
-        <span className="font-display text-xl font-semibold tracking-tight text-ink-900">Atelix</span>
+        <span className="text-xl font-bold tracking-[-0.03em] text-ink-900">Atelix</span>
       )}
     </span>
   );

@@ -61,7 +61,7 @@ function Content() {
       <main className="mx-auto max-w-3xl px-4 sm:px-6 py-10">
         <div className="mb-6">
           <Link href="/tailor" className="text-sm text-ink-500 hover:text-ink-900">← Panel</Link>
-          <h1 className="mt-3 text-3xl font-semibold tracking-tight">Profilni tahrirlash</h1>
+          <h1 className="mt-3 text-[clamp(28px,4.4vw,38px)] font-extrabold tracking-[-0.035em]">Profilni tahrirlash</h1>
           <p className="mt-1 text-ink-600">Bu ma'lumotlar katalogda mijozlarga ko'rinadi.</p>
         </div>
 

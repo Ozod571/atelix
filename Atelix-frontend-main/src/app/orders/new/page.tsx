@@ -104,7 +104,7 @@ function Content() {
       <main className="mx-auto max-w-2xl px-4 sm:px-6 py-10">
         <div className="mb-6">
           <Link href="/dashboard" className="text-sm text-ink-500 hover:text-ink-900">← Asosiy</Link>
-          <h1 className="mt-3 text-3xl font-semibold tracking-tight">Yangi buyurtma</h1>
+          <h1 className="mt-3 text-[clamp(28px,4.4vw,38px)] font-extrabold tracking-[-0.035em]">Yangi buyurtma</h1>
           <p className="mt-1 text-ink-600">Tikuvchi va kiyim turini tanlang.</p>
         </div>
 
@@ -176,7 +176,9 @@ function Content() {
                   type="button"
                   onClick={() => setClothingType(c.value)}
                   className={`rounded-xl border p-3 text-sm font-medium transition ${
-                    clothingType === c.value ? "border-ink-900 bg-ink-900 text-ink-50" : "border-ink-200 hover:border-ink-400"
+                    clothingType === c.value
+                      ? "border-accent bg-accent/10 text-accent"
+                      : "border-ink-200 text-ink-700 hover:border-ink-300 hover:bg-ink-100"
                   }`}
                 >
                   {c.label}

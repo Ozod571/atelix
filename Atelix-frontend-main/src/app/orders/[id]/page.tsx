@@ -24,7 +24,6 @@ export default function OrderDetailPage() {
   const [showAccept, setShowAccept] = useState(false);
   const [priceInput, setPriceInput] = useState("");
 
-  // Sharh
   const [review, setReview] = useState<Review | null>(null);
   const [reviewRating, setReviewRating] = useState(5);
   const [reviewComment, setReviewComment] = useState("");
@@ -148,7 +147,7 @@ export default function OrderDetailPage() {
 
         <div className="flex flex-wrap items-end justify-between gap-3">
           <div>
-            <h1 className="text-3xl font-semibold tracking-tight">{clothingLabel(order.clothingType)}</h1>
+            <h1 className="text-[clamp(28px,4.4vw,38px)] font-extrabold tracking-[-0.035em]">{clothingLabel(order.clothingType)}</h1>
             <p className="mt-1 text-ink-500">{new Date(order.createdAt).toLocaleString("uz-UZ")}</p>
           </div>
           {order.price ? (
@@ -181,7 +180,7 @@ export default function OrderDetailPage() {
 
         {(order.resultImage || (isTailor && (order.status === "accepted" || order.status === "completed"))) && (
           <div className="mt-6 card">
-            <h2 className="text-lg font-semibold">Tayyor ish rasmi</h2>
+            <h2 className="text-[17px] font-bold tracking-[-0.03em]">Tayyor ish rasmi</h2>
             {order.resultImage && (
               <div className="mt-3 overflow-hidden rounded-xl ring-1 ring-ink-200">
                 <img src={order.resultImage} alt="Tayyor ish" className="w-full object-cover" />
@@ -201,7 +200,7 @@ export default function OrderDetailPage() {
         )}
 
         <div className="mt-6 card">
-          <h2 className="text-lg font-semibold">O'lchovlar</h2>
+          <h2 className="text-[17px] font-bold tracking-[-0.03em]">O'lchovlar</h2>
           <div className="mt-4 grid grid-cols-2 sm:grid-cols-3 gap-4">
             {MEASUREMENT_FIELDS.map((f) => (
               <div key={f.key} className="rounded-xl bg-ink-50 p-3">
@@ -216,14 +215,14 @@ export default function OrderDetailPage() {
 
         {order.notes && (
           <div className="mt-6 card">
-            <h2 className="text-lg font-semibold">Mijoz izohi</h2>
+            <h2 className="text-[17px] font-bold tracking-[-0.03em]">Mijoz izohi</h2>
             <p className="mt-2 text-ink-700 whitespace-pre-wrap">{order.notes}</p>
           </div>
         )}
 
         {order.tailorComment && (
           <div className="mt-6 card">
-            <h2 className="text-lg font-semibold">Tikuvchi izohi</h2>
+            <h2 className="text-[17px] font-bold tracking-[-0.03em]">Tikuvchi izohi</h2>
             <p className="mt-2 text-ink-700 whitespace-pre-wrap">{order.tailorComment}</p>
           </div>
         )}
@@ -236,7 +235,7 @@ export default function OrderDetailPage() {
 
         {order.status === "completed" && (
           <div className="mt-6 card">
-            <h2 className="text-lg font-semibold">Sharh</h2>
+            <h2 className="text-[17px] font-bold tracking-[-0.03em]">Sharh</h2>
             {review ? (
               <div className="mt-3">
                 <StarRating value={review.rating} size="md" />
@@ -276,7 +275,7 @@ export default function OrderDetailPage() {
                   action(() => orderApi.reject(order._id, c), "Rad etildi");
                 }}
                 disabled={acting}
-                className="btn text-rose-600 ring-1 ring-rose-200 hover:bg-rose-50"
+                className="btn text-danger ring-1 ring-danger/25 hover:bg-danger/8"
               >
                 Rad etish
               </button>

@@ -106,7 +106,7 @@ export default function ImageUpload({
               {busy ? "Yuklanmoqda..." : label}
             </button>
             {value && (
-              <button type="button" onClick={() => onChange?.(null)} className="btn-ghost text-rose-600">
+              <button type="button" onClick={() => onChange?.(null)} className="btn-ghost btn-sm text-danger">
                 O'chirish
               </button>
             )}

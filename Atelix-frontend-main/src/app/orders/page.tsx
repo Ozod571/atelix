@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import Navbar from "@/components/Navbar";
+import { Skeleton } from "@/components/Skeleton";
 import RoleGuard from "@/components/RoleGuard";
 import { orderApi, errMsg } from "@/lib/api";
 import type { Order } from "@/types";
@@ -33,13 +34,17 @@ function Content() {
         <div className="flex items-baseline justify-between gap-4">
           <div>
             <Link href="/dashboard" className="text-sm text-ink-500 hover:text-ink-900">← Asosiy</Link>
-            <h1 className="mt-3 text-3xl font-semibold tracking-tight">Mening buyurtmalarim</h1>
+            <h1 className="mt-3 text-[clamp(28px,4.4vw,38px)] font-extrabold tracking-[-0.035em]">Mening buyurtmalarim</h1>
           </div>
           <Link href="/orders/new" className="btn-primary">+ Yangi buyurtma</Link>
         </div>
 
         {loading ? (
-          <div className="mt-8 card text-sm text-ink-500">Yuklanmoqda...</div>
+          <div className="mt-8 space-y-3">
+            <Skeleton className="h-24" />
+            <Skeleton className="h-24" />
+            <Skeleton className="h-24" />
+          </div>
         ) : orders.length === 0 ? (
           <div className="mt-8">
             <EmptyState

@@ -28,7 +28,7 @@ export default function NotificationBell() {
       setItems(res.items || []);
       setUnread(res.unread || 0);
     } catch {
-          }
+    }
   };
 
   useEffect(() => {
@@ -53,8 +53,15 @@ export default function NotificationBell() {
     const onClick = (e: MouseEvent) => {
       if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false);
     };
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setOpen(false);
+    };
     document.addEventListener("mousedown", onClick);
-    return () => document.removeEventListener("mousedown", onClick);
+    document.addEventListener("keydown", onKey);
+    return () => {
+      document.removeEventListener("mousedown", onClick);
+      document.removeEventListener("keydown", onKey);
+    };
   }, []);
 
   const toggle = async () => {
@@ -80,45 +87,54 @@ export default function NotificationBell() {
     <div className="relative" ref={ref}>
       <button
         onClick={toggle}
-        className="relative rounded-full p-2 text-ink-600 transition hover:bg-ink-100 hover:text-ink-900"
+        className="relative rounded-full p-2.5 text-ink-600 transition duration-200 ease-ios hover:bg-ink-100 hover:text-ink-900 active:scale-90"
         aria-label="Bildirishnomalar"
+        aria-expanded={open}
       >
         <svg className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth={1.8} viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0" />
         </svg>
         {unread > 0 && (
-          <span className="absolute -right-0.5 -top-0.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-rose-500 px-1 text-[10px] font-semibold text-white">
+          <span className="absolute right-0.5 top-0.5 flex h-[18px] min-w-[18px] items-center justify-center rounded-full bg-danger px-1 text-[10.5px] font-bold text-white ring-2 ring-surface">
             {unread > 9 ? "9+" : unread}
           </span>
         )}
       </button>
 
       {open && (
-        <div className="absolute right-0 mt-2 w-80 max-w-[calc(100vw-2rem)] overflow-hidden rounded-2xl bg-surface shadow-lg ring-1 ring-ink-200 z-50">
-          <div className="flex items-center justify-between border-b border-ink-100 px-4 py-3">
-            <span className="text-sm font-semibold text-ink-900">Bildirishnomalar</span>
+        <div className="glass animate-fade-up absolute right-0 z-50 mt-2 w-[340px] max-w-[calc(100vw-2rem)] overflow-hidden rounded-[24px] shadow-ios-lg ring-1 ring-ink-200/70">
+          <div className="flex items-center justify-between border-b border-ink-200/70 px-5 py-3.5">
+            <span className="text-[15px] font-bold tracking-[-0.02em] text-ink-900">Bildirishnomalar</span>
+            {items.length > 0 && (
+              <span className="text-[12.5px] font-medium text-ink-500">{items.length}</span>
+            )}
           </div>
           <div className="max-h-96 overflow-y-auto">
             {items.length === 0 ? (
-              <p className="px-4 py-8 text-center text-sm text-ink-400">Hali bildirishnoma yo'q</p>
+              <div className="px-5 py-12 text-center">
+                <span className="text-2xl">🔔</span>
+                <p className="mt-2.5 text-[14px] text-ink-500">Hali bildirishnoma yo&apos;q</p>
+              </div>
             ) : (
               items.map((n) => (
                 <button
                   key={n._id}
                   onClick={() => openItem(n)}
-                  className={`flex w-full items-start gap-3 border-b border-ink-100 px-4 py-3 text-left transition hover:bg-ink-50 ${
-                    n.read ? "" : "bg-ink-50/60"
+                  className={`flex w-full items-start gap-3 border-b border-ink-200/50 px-5 py-3.5 text-left transition last:border-0 hover:bg-ink-100/60 ${
+                    n.read ? "" : "bg-accent/[0.06]"
                   }`}
                 >
-                  <span className="text-lg">{ICONS[n.type] || "🔔"}</span>
+                  <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-[12px] bg-ink-100 text-base">
+                    {ICONS[n.type] || "🔔"}
+                  </span>
                   <div className="min-w-0 flex-1">
-                    <div className="text-sm font-medium text-ink-900">{n.title}</div>
-                    {n.body && <div className="mt-0.5 text-xs text-ink-500 line-clamp-2">{n.body}</div>}
-                    <div className="mt-1 text-[11px] text-ink-400">
+                    <div className="text-[14.5px] font-semibold text-ink-900">{n.title}</div>
+                    {n.body && <div className="mt-0.5 line-clamp-2 text-[13px] text-ink-500">{n.body}</div>}
+                    <div className="mt-1 text-[11.5px] text-ink-400">
                       {new Date(n.createdAt).toLocaleString("uz-UZ")}
                     </div>
                   </div>
-                  {!n.read && <span className="mt-1.5 h-2 w-2 shrink-0 rounded-full bg-rose-500" />}
+                  {!n.read && <span className="mt-2 h-2 w-2 shrink-0 rounded-full bg-accent" />}
                 </button>
               ))
             )}

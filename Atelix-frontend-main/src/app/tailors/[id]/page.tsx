@@ -64,12 +64,12 @@ export default function TailorProfilePage() {
 
             <img src={tailor.avatar} alt={tailor.shopName || tailor.name} className="h-20 w-20 shrink-0 rounded-2xl object-cover ring-1 ring-ink-200" />
           ) : (
-            <div className="flex h-20 w-20 shrink-0 items-center justify-center rounded-2xl bg-ink-900 text-white text-2xl font-semibold">
+            <div className="bg-grad flex h-20 w-20 shrink-0 items-center justify-center rounded-[24px] text-2xl font-bold text-accent-fg">
               {(tailor.shopName || tailor.name).charAt(0).toUpperCase()}
             </div>
           )}
           <div className="min-w-0">
-            <h1 className="text-3xl font-semibold tracking-tight">{tailor.shopName || tailor.name}</h1>
+            <h1 className="text-[clamp(28px,4.4vw,38px)] font-extrabold tracking-[-0.035em]">{tailor.shopName || tailor.name}</h1>
             <p className="mt-1 text-ink-600">
               {tailor.name}{tailor.city ? ` · ${tailor.city}` : ""}
             </p>
@@ -87,7 +87,7 @@ export default function TailorProfilePage() {
 
         {tailor.bio && (
           <div className="mt-6 card">
-            <h2 className="text-lg font-semibold">Usta haqida</h2>
+            <h2 className="text-[17px] font-bold tracking-[-0.03em]">Usta haqida</h2>
             <p className="mt-2 text-ink-700 whitespace-pre-wrap">{tailor.bio}</p>
           </div>
         )}

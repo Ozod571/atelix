@@ -158,22 +158,26 @@ export default function MeasurementForm({ initial, onSaved, redirectTo }: Props)
       </div>
 
       <div className="card">
-        <div className="flex items-center justify-between text-sm">
-          <span className="font-medium text-ink-900">To'ldirilgan: {filledCount}/{MEASUREMENT_FIELDS.length}</span>
-          <span className="text-ink-500">{progress}%</span>
+        <div className="flex items-center justify-between text-[14px]">
+          <span className="font-semibold text-ink-900">
+            To&apos;ldirilgan: {filledCount}/{MEASUREMENT_FIELDS.length}
+          </span>
+          <span className="font-medium text-ink-500">{progress}%</span>
         </div>
-        <div className="mt-2 h-2 w-full overflow-hidden rounded-full bg-ink-100">
-          <div className="h-full rounded-full bg-accent transition-all" style={{ width: `${progress}%` }} />
+        <div className="mt-2.5 h-2 w-full overflow-hidden rounded-full bg-ink-100">
+          <div
+            className="bg-grad h-full rounded-full transition-all duration-500 ease-ios"
+            style={{ width: `${progress}%` }}
+          />
         </div>
-        <div className="mt-4 flex gap-2">
+        <div className="segmented mt-5">
           {STEPS.map((st, i) => (
             <button
               key={st.title}
               type="button"
               onClick={() => setStep(i)}
-              className={`flex-1 rounded-lg px-2 py-2 text-xs font-medium transition ${
-                i === step ? "bg-accent text-accent-fg" : "bg-ink-100 text-ink-600 hover:bg-ink-200"
-              }`}
+              data-active={i === step}
+              className="segmented-item !text-[13px]"
             >
               {i + 1}. {st.title}
             </button>
@@ -182,12 +186,12 @@ export default function MeasurementForm({ initial, onSaved, redirectTo }: Props)
       </div>
 
       <div className="card">
-        <div className="grid grid-cols-1 md:grid-cols-[140px_1fr] gap-6">
+        <div key={step} className="animate-fade-up grid grid-cols-1 gap-7 md:grid-cols-[160px_1fr]">
           <div className="flex flex-col items-center">
-            <BodyFigure active={current.region} className="h-56 w-auto" />
-            <div className="mt-3 text-center">
-              <div className="text-sm font-semibold text-ink-900">{current.title}</div>
-              <div className="text-xs text-ink-500">{current.hint}</div>
+            <BodyFigure active={current.region} className="h-64 w-auto" />
+            <div className="mt-4 text-center">
+              <div className="text-[15px] font-bold tracking-[-0.02em] text-ink-900">{current.title}</div>
+              <div className="mt-0.5 text-[13px] text-ink-500">{current.hint}</div>
             </div>
           </div>
 
@@ -206,13 +210,14 @@ export default function MeasurementForm({ initial, onSaved, redirectTo }: Props)
                     step="0.5"
                     min={f.min}
                     max={f.max}
-                    className={`input ${errors[key] ? "border-rose-400 focus:border-rose-500 focus:ring-rose-500/10" : ""}`}
+                    className={`input ${errors[key] ? "!border-danger" : ""}`}
+                    aria-invalid={!!errors[key]}
                     placeholder={f.placeholder}
                     value={values[key] ?? ""}
                     onChange={(e) => setField(key, e.target.value)}
                   />
                   {errors[key] ? (
-                    <p className="mt-1 text-xs text-rose-600">{errors[key]}</p>
+                    <p className="mt-1.5 text-[13px] font-medium text-danger">{errors[key]}</p>
                   ) : (
                     <p className="helper">{f.helper} ({f.min}–{f.max} sm)</p>
                   )}
@@ -236,7 +241,7 @@ export default function MeasurementForm({ initial, onSaved, redirectTo }: Props)
               Keyingi →
             </button>
           ) : (
-            <span className="text-xs text-ink-400">Oxirgi bosqich</span>
+            <span className="text-[13px] font-medium text-ink-400">Oxirgi bosqich</span>
           )}
         </div>
       </div>

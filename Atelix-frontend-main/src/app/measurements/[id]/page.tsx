@@ -60,10 +60,10 @@ function Content() {
         <div className="mb-6 flex items-start justify-between gap-4">
           <div>
             <Link href="/dashboard" className="text-sm text-ink-500 hover:text-ink-900">← Asosiy</Link>
-            <h1 className="mt-3 text-3xl font-semibold tracking-tight">O'lchovni tahrirlash</h1>
+            <h1 className="mt-3 text-[clamp(28px,4.4vw,38px)] font-extrabold tracking-[-0.035em]">O'lchovni tahrirlash</h1>
             <p className="mt-1 text-ink-600">Maydonlarni o'zgartirib, "Yangilash" tugmasini bosing.</p>
           </div>
-          <button onClick={remove} className="btn text-rose-600 hover:bg-rose-50">
+          <button onClick={remove} className="btn text-danger hover:bg-danger/8">
             O'chirish
           </button>
         </div>

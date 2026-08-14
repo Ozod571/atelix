@@ -16,8 +16,8 @@ export default function Error({
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-center px-4 text-center">
-      <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-rose-50 text-3xl">⚠️</div>
-      <h1 className="mt-6 text-2xl font-semibold tracking-tight">Nimadir xato ketdi</h1>
+      <div className="flex h-20 w-20 items-center justify-center rounded-[26px] bg-danger/10 text-3xl">⚠️</div>
+      <h1 className="mt-6 text-[26px] font-extrabold tracking-[-0.035em]">Nimadir xato ketdi</h1>
       <p className="mt-2 max-w-md text-ink-600">
         Kutilmagan xatolik yuz berdi. Iltimos, sahifani qayta yuklab ko'ring.
       </p>

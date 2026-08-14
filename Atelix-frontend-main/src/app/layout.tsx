@@ -1,18 +1,11 @@
 import type { Metadata } from "next";
-import { Inter, Manrope } from "next/font/google";
+import { Inter } from "next/font/google";
 import { Toaster } from "react-hot-toast";
 import "./globals.css";
 
 const inter = Inter({
   subsets: ["latin", "latin-ext"],
   variable: "--font-inter",
-  display: "swap",
-});
-
-const manrope = Manrope({
-  subsets: ["latin"],
-  weight: ["500", "600", "700", "800"],
-  variable: "--font-display",
   display: "swap",
 });
 
@@ -49,8 +42,10 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="uz" className={`${inter.variable} ${manrope.variable}`} suppressHydrationWarning>
+    <html lang="uz" className={inter.variable} suppressHydrationWarning>
       <head>
+        <meta name="theme-color" content="#f2f2f7" media="(prefers-color-scheme: light)" />
+        <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)" />
         <script
           dangerouslySetInnerHTML={{
             __html: `(function(){try{var t=localStorage.getItem('atelix_theme');if(t==='dark'||(!t&&window.matchMedia('(prefers-color-scheme: dark)').matches)){document.documentElement.classList.add('dark');}}catch(e){}})();`,
@@ -64,11 +59,16 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           toastOptions={{
             duration: 3500,
             style: {
-              borderRadius: "12px",
-              fontSize: "14px",
-              background: "rgb(var(--surface))",
+              borderRadius: "18px",
+              fontSize: "14.5px",
+              fontWeight: 500,
+              padding: "12px 16px",
+              background: "rgb(var(--surface) / 0.82)",
+              backdropFilter: "saturate(180%) blur(22px)",
+              WebkitBackdropFilter: "saturate(180%) blur(22px)",
               color: "rgb(var(--ink-900))",
-              border: "1px solid rgb(var(--ink-200))",
+              border: "1px solid rgb(var(--ink-200) / 0.8)",
+              boxShadow: "var(--shadow-2)",
             },
           }}
         />

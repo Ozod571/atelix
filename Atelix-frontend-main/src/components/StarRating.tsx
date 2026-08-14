@@ -1,25 +1,25 @@
 "use client";
+import { useId } from "react";
 
 interface Props {
-    value: number;
-    count?: number;
+  value: number;
+  count?: number;
   size?: "sm" | "md" | "lg";
-    interactive?: boolean;
+  interactive?: boolean;
   onChange?: (v: number) => void;
   className?: string;
 }
 
 const SIZES = { sm: "h-4 w-4", md: "h-5 w-5", lg: "h-7 w-7" };
 
-function Star({ fill, className }: { fill: number; className: string }) {
-
-  const id = `star-${Math.random().toString(36).slice(2, 9)}`;
+function Star({ fill, className, uid }: { fill: number; className: string; uid: string }) {
+  const id = `${uid}-${Math.round(fill * 100)}`;
   return (
     <svg className={className} viewBox="0 0 24 24" aria-hidden="true">
       <defs>
         <linearGradient id={id}>
-          <stop offset={`${fill * 100}%`} stopColor="#f59e0b" />
-          <stop offset={`${fill * 100}%`} stopColor="#e5e5e5" />
+          <stop offset={`${fill * 100}%`} stopColor="rgb(var(--orange))" />
+          <stop offset={`${fill * 100}%`} stopColor="rgb(var(--ink-300))" />
         </linearGradient>
       </defs>
       <path
@@ -39,19 +39,22 @@ export default function StarRating({
   className = "",
 }: Props) {
   const cls = SIZES[size];
+  const uid = useId().replace(/:/g, "");
 
   if (interactive) {
     return (
-      <div className={`inline-flex items-center gap-1 ${className}`}>
+      <div className={`inline-flex items-center gap-1.5 ${className}`} role="radiogroup">
         {[1, 2, 3, 4, 5].map((n) => (
           <button
             key={n}
             type="button"
             onClick={() => onChange?.(n)}
-            className="transition hover:scale-110"
+            className="rounded-full transition duration-200 ease-ios hover:scale-125 active:scale-95"
             aria-label={`${n} yulduz`}
+            aria-checked={value === n}
+            role="radio"
           >
-            <Star fill={value >= n ? 1 : 0} className={cls} />
+            <Star fill={value >= n ? 1 : 0} className={cls} uid={`${uid}-${n}`} />
           </button>
         ))}
       </div>
@@ -63,11 +66,11 @@ export default function StarRating({
       <div className="flex items-center gap-0.5">
         {[1, 2, 3, 4, 5].map((n) => {
           const fill = Math.max(0, Math.min(1, value - (n - 1)));
-          return <Star key={n} fill={fill} className={cls} />;
+          return <Star key={n} fill={fill} className={cls} uid={`${uid}-${n}`} />;
         })}
       </div>
       {typeof count === "number" && (
-        <span className="ml-1 text-xs text-ink-500">
+        <span className="ml-1.5 text-[13px] font-medium text-ink-500">
           {value > 0 ? value.toFixed(1) : "—"}
           {count > 0 ? ` (${count})` : " (sharh yo'q)"}
         </span>

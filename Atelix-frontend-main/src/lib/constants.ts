@@ -12,11 +12,11 @@ export const clothingLabel = (t: ClothingType) =>
   CLOTHING_TYPES.find((x) => x.value === t)?.label || t;
 
 export const STATUS_LABELS: Record<OrderStatus, { label: string; color: string }> = {
-  pending:   { label: "Kutilmoqda",      color: "bg-amber-100 text-amber-800 ring-amber-200" },
-  accepted:  { label: "Qabul qilindi",   color: "bg-blue-100 text-blue-800 ring-blue-200" },
-  completed: { label: "Tayyor",          color: "bg-emerald-100 text-emerald-800 ring-emerald-200" },
-  rejected:  { label: "Rad etildi",      color: "bg-rose-100 text-rose-800 ring-rose-200" },
-  cancelled: { label: "Bekor qilindi",   color: "bg-neutral-100 text-neutral-700 ring-neutral-200" },
+  pending:   { label: "Kutilmoqda",    color: "bg-warning/12 text-warning ring-warning/25" },
+  accepted:  { label: "Qabul qilindi", color: "bg-info/12 text-info ring-info/25" },
+  completed: { label: "Tayyor",        color: "bg-success/12 text-success ring-success/25" },
+  rejected:  { label: "Rad etildi",    color: "bg-danger/12 text-danger ring-danger/25" },
+  cancelled: { label: "Bekor qilindi", color: "bg-ink-200/60 text-ink-600 ring-ink-300/50" },
 };
 
 export type MeasurementKey =
