@@ -8,7 +8,7 @@ Mijozlar tana o'lchovlarini **bir marta** saqlaydi va O'zbekistondagi ishonchli
 tikuvchilarga **bir bosishda** buyurtma beradi — reyting, narx, sharhlar,
 real-time chat va bildirishnomalar bilan.
 
-**🌐 Jonli sayt:** [atelix.uz](https://atelix.uz) &nbsp;·&nbsp; **💻 Kod:** [github.com/Ozod571/atelix](https://github.com/Ozod571/atelix)
+**🌐 Jonli sayt:** [www.atelix.uz](https://www.atelix.uz) &nbsp;·&nbsp; **💻 Kod:** [github.com/Ozod571/atelix](https://github.com/Ozod571/atelix)
 
 `Next.js 14` · `TypeScript` · `Node.js` · `Express` · `MongoDB` · `Socket.io` · `Tailwind CSS`
 
