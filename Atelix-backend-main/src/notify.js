@@ -1,9 +1,3 @@
-/**
- * Bildirishnoma yaratish yordamchisi
- *
- * DB ga yozadi va (io berilgan bo'lsa) `user:<id>` xonasiga real-time
- * yuboradi. Xatolik yuz bersa asosiy oqimni buzmaydi — faqat log qiladi.
- */
 const Notification = require("./models/Notification");
 
 async function createNotification(io, { user, type, title, body = "", order }) {

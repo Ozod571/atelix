@@ -21,7 +21,6 @@ export default function OrderDetailPage() {
   const [loading, setLoading] = useState(true);
   const [acting, setActing] = useState(false);
 
-  // Qabul qilish (narx) paneli
   const [showAccept, setShowAccept] = useState(false);
   const [priceInput, setPriceInput] = useState("");
 
@@ -48,7 +47,7 @@ export default function OrderDetailPage() {
           try {
             const rv = await reviewApi.forOrder(id);
             setReview(rv.review || null);
-          } catch { /* sharh yo'q — muammo emas */ }
+          } catch {  }
         }
       } catch (e) {
         toast.error(errMsg(e));
@@ -160,7 +159,6 @@ export default function OrderDetailPage() {
           ) : null}
         </div>
 
-        {/* Parties */}
         <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div className="card">
             <div className="text-xs font-medium uppercase tracking-wide text-ink-400">Mijoz</div>
@@ -177,18 +175,15 @@ export default function OrderDetailPage() {
           </div>
         </div>
 
-        {/* Timeline */}
         <div className="mt-6">
           <OrderTimeline order={order} />
         </div>
 
-        {/* Tayyor ish rasmi */}
         {(order.resultImage || (isTailor && (order.status === "accepted" || order.status === "completed"))) && (
           <div className="mt-6 card">
             <h2 className="text-lg font-semibold">Tayyor ish rasmi</h2>
             {order.resultImage && (
               <div className="mt-3 overflow-hidden rounded-xl ring-1 ring-ink-200">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src={order.resultImage} alt="Tayyor ish" className="w-full object-cover" />
               </div>
             )}
@@ -205,7 +200,6 @@ export default function OrderDetailPage() {
           </div>
         )}
 
-        {/* Measurements */}
         <div className="mt-6 card">
           <h2 className="text-lg font-semibold">O'lchovlar</h2>
           <div className="mt-4 grid grid-cols-2 sm:grid-cols-3 gap-4">
@@ -220,7 +214,6 @@ export default function OrderDetailPage() {
           </div>
         </div>
 
-        {/* Notes */}
         {order.notes && (
           <div className="mt-6 card">
             <h2 className="text-lg font-semibold">Mijoz izohi</h2>
@@ -235,14 +228,12 @@ export default function OrderDetailPage() {
           </div>
         )}
 
-        {/* ─── REAL-TIME CHAT (ishtirokchilar uchun) ──────────────── */}
         {order.status !== "cancelled" && order.status !== "rejected" && (
           <div className="mt-6">
             <OrderChat orderId={order._id} currentUserId={user._id} />
           </div>
         )}
 
-        {/* ─── SHARH (mijoz, tayyor buyurtma) ─────────────────────── */}
         {order.status === "completed" && (
           <div className="mt-6 card">
             <h2 className="text-lg font-semibold">Sharh</h2>
@@ -273,7 +264,6 @@ export default function OrderDetailPage() {
           </div>
         )}
 
-        {/* Actions */}
         <div className="mt-8 flex flex-wrap gap-3">
           {isTailor && order.status === "pending" && !showAccept && (
             <>

@@ -8,7 +8,7 @@ export default function robots(): MetadataRoute.Robots {
       {
         userAgent: "*",
         allow: ["/", "/tailors"],
-        // Shaxsiy panel va autentifikatsiya sahifalarini indekslamaymiz
+
         disallow: ["/dashboard", "/orders", "/tailor", "/measurements", "/auth"],
       },
     ],

@@ -1,7 +1,3 @@
-/**
- * Atelix Backend
- * Node.js + Express + MongoDB
- */
 const http = require("http");
 const express = require("express");
 const mongoose = require("mongoose");
@@ -26,24 +22,20 @@ const MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost:27017/atelix
 const CLIENT_URL = process.env.CLIENT_URL || "*";
 const corsOrigin = CLIENT_URL === "*" ? true : CLIENT_URL.split(",");
 
-// Railway/Heroku kabi reverse-proxy ortida ishlaydi — haqiqiy IP va rate-limit uchun
 app.set("trust proxy", 1);
 
-// ─── MIDDLEWARE ──────────────────────────────────────────────────────────────
 app.use(helmet());
 app.use(cors({ origin: corsOrigin, credentials: true }));
-app.use(express.json({ limit: "8mb" })); // base64 rasm yuklash uchun
+app.use(express.json({ limit: "8mb" }));
 app.use(express.urlencoded({ extended: true, limit: "8mb" }));
 if (process.env.NODE_ENV !== "test") app.use(morgan("dev"));
 
-// Rate limiting
 app.use("/api/", rateLimit({
   windowMs: 15 * 60 * 1000,
   max: 200,
   message: { error: "Juda ko'p so'rov yuborildi. Biroz kuting." },
 }));
 
-// ─── ROUTES ──────────────────────────────────────────────────────────────────
 app.get("/api/health", (req, res) => {
   res.json({
     status: "ok",
@@ -63,7 +55,6 @@ app.use("/api/notifications", notificationRoutes);
 
 app.use((req, res) => res.status(404).json({ error: "Sahifa topilmadi" }));
 
-// ─── ERROR HANDLER ───────────────────────────────────────────────────────────
 app.use((err, req, res, next) => {
   console.error("[ERROR]", err.message);
   if (err.name === "ValidationError") {
@@ -74,39 +65,34 @@ app.use((err, req, res, next) => {
   res.status(500).json({ error: "Server xatosi" });
 });
 
-// ─── HTTP + SOCKET.IO ──────────────────────────────────────────────────────────
 const server = http.createServer(app);
 const io = new Server(server, {
   cors: { origin: corsOrigin, credentials: true },
 });
-app.set("io", io);   // routelarda req.app.get("io") orqali ishlatiladi
+app.set("io", io);
 initSocket(io);
 
-// ─── START ───────────────────────────────────────────────────────────────────
 async function start(uri = MONGODB_URI, port = PORT) {
   await mongoose.connect(uri);
-  console.log("✅ MongoDB ulandi");
+  console.log("MongoDB ulandi");
 
-  // Eski (email asosidagi) noyoblik indeksini olib tashlaymiz — endi telefon asosiy
   try {
     await mongoose.connection.collection("users").dropIndex("email_1");
-    console.log("🧹 Eski email indeksi olib tashlandi");
+    console.log("Eski email indeksi olib tashlandi");
   } catch (e) {
-    /* indeks yo'q bo'lsa — muammo emas */
-  }
+      }
   await new Promise((resolve) => {
     server.listen(port, "0.0.0.0", () => {
-      console.log(`🚀 Atelix API + WebSocket: http://localhost:${port}`);
+      console.log(`Atelix API + WebSocket: http://localhost:${port}`);
       resolve();
     });
   });
   return { app, server, io };
 }
 
-// Faqat to'g'ridan-to'g'ri ishga tushirilganda ulanamiz (test importlariga xalaqit bermaydi)
 if (require.main === module) {
   start().catch((err) => {
-    console.error("❌ MongoDB xatosi:", err.message);
+    console.error("MongoDB xatosi:", err.message);
     process.exit(1);
   });
 }

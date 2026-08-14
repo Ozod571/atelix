@@ -1,20 +1,6 @@
-/**
- * Order — mijoz tikuvchiga yuboradigan buyurtma
- *
- * Status oqimi:
- *   pending  → tikuvchi qabul qilishi kutilyapti
- *   accepted → tikuvchi qabul qildi (narx belgilanadi), ish boshlandi
- *   completed→ tayyor
- *   rejected → tikuvchi rad etdi
- *   cancelled→ mijoz bekor qildi
- *
- * O'lchovlar shu hujjat ichida snapshot sifatida saqlanadi —
- * mijoz keyinchalik o'lchovni o'zgartirsa ham, shu buyurtma o'zgarmaydi.
- */
 const mongoose = require("mongoose");
 const { MEASUREMENT_KEYS } = require("../config/measurementFields");
 
-// Snapshot sxemasini markazlashgan maydon ro'yxatidan quramiz
 const snapshotDef = {};
 for (const key of MEASUREMENT_KEYS) snapshotDef[key] = Number;
 
@@ -50,7 +36,6 @@ const orderSchema = new mongoose.Schema(
       maxlength: [1000, "Izoh juda uzun"],
     },
 
-    // Buyurtma yaratilgan paytdagi o'lchovlar nusxasi
     measurements: {
       type: measurementSnapshotSchema,
       required: true,
@@ -63,7 +48,6 @@ const orderSchema = new mongoose.Schema(
       index: true,
     },
 
-    // Tikuvchi qabul qilishda belgilaydigan narx (so'm)
     price: {
       type: Number,
       min: [0, "Narx manfiy bo'lolmaydi"],
@@ -72,10 +56,8 @@ const orderSchema = new mongoose.Schema(
 
     tailorComment: { type: String, trim: true, maxlength: 500 },
 
-    // Tikuvchi yuklaydigan tayyor ish rasmi (data URL)
     resultImage: { type: String },
 
-    // Mijoz buyurtma tugagach sharh qoldirganmi (tez tekshirish uchun)
     reviewed: { type: Boolean, default: false },
 
     acceptedAt: Date,

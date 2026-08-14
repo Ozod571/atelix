@@ -7,30 +7,28 @@
 :root {
   --font-inter: 'Inter', system-ui, sans-serif;
 
-  /* Zamonaviy minimal palitra (RGB kanallar) — YORUG' rejim
-     Sovuq neytral kulranglar, urg'u — indigo */
-  --ink-50: 248 249 251;   /* sahifa foni (juda och kulrang) */
+  --ink-50: 248 249 251;
   --ink-100: 243 244 247;
-  --ink-200: 228 231 236;  /* chegara */
+  --ink-200: 228 231 236;
   --ink-300: 209 213 220;
   --ink-400: 156 163 175;
   --ink-500: 107 114 128;
   --ink-600: 75 85 99;
   --ink-700: 55 65 81;
   --ink-800: 31 41 55;
-  --ink-900: 17 24 39;     /* deyarli qora (sovuq) matn */
-  --surface: 255 255 255;  /* oq karta */
+  --ink-900: 17 24 39;
+  --surface: 255 255 255;
   --surface-2: 249 250 251;
-  --accent: 79 70 229;     /* indigo #4f46e5 */
-  --accent-600: 67 56 202; /* indigo-700 */
+  --accent: 79 70 229;
+  --accent-600: 67 56 202;
   --accent-fg: 255 255 255;
 }
 
 .dark {
-  /* QORONG'I rejim — sovuq to'q slate */
-  --ink-50: 15 17 21;      /* sahifa foni #0f1115 */
+
+  --ink-50: 15 17 21;
   --ink-100: 22 25 31;
-  --ink-200: 38 42 51;     /* chegara */
+  --ink-200: 38 42 51;
   --ink-300: 55 61 73;
   --ink-400: 118 126 141;
   --ink-500: 148 155 168;
@@ -38,9 +36,9 @@
   --ink-700: 208 213 221;
   --ink-800: 230 233 238;
   --ink-900: 244 246 249;
-  --surface: 22 25 31;     /* karta #16191f */
+  --surface: 22 25 31;
   --surface-2: 29 33 41;
-  --accent: 129 140 248;   /* indigo-400 (qorong'ida yorug'roq) */
+  --accent: 129 140 248;
   --accent-600: 165 180 252;
   --accent-fg: 17 20 27;
 }
@@ -63,7 +61,6 @@ html, body {
   text-rendering: optimizeLegibility;
 }
 
-/* Sarlavhalar uchun zamonaviy sans shrift (Manrope) — dadil, tor tracking */
 @layer base {
   h1, h2, h3, .font-display {
     font-family: var(--font-display), 'Manrope', 'Inter', system-ui, sans-serif;
@@ -84,7 +81,6 @@ input[type="number"] { -moz-appearance: textfield; }
   color: rgb(var(--accent-fg));
 }
 
-/* Scrollbar */
 ::-webkit-scrollbar { width: 10px; height: 10px; }
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb {
@@ -94,7 +90,6 @@ input[type="number"] { -moz-appearance: textfield; }
 }
 ::-webkit-scrollbar-thumb:hover { background: rgb(var(--ink-400)); }
 
-/* Subtle entrance for landing sections */
 @keyframes fade-up {
   from { opacity: 0; transform: translateY(8px); }
   to   { opacity: 1; transform: translateY(0); }

@@ -1,6 +1,3 @@
-/**
- * /api/notifications — in-app bildirishnomalar
- */
 const express = require("express");
 const mongoose = require("mongoose");
 const Notification = require("../models/Notification");
@@ -11,7 +8,6 @@ const isObjId = (s) => mongoose.isValidObjectId(s);
 
 router.use(protect);
 
-// Ro'yxat (oxirgi 50) + o'qilmagan soni
 router.get("/", async (req, res, next) => {
   try {
     const [items, unread] = await Promise.all([
@@ -22,7 +18,6 @@ router.get("/", async (req, res, next) => {
   } catch (err) { next(err); }
 });
 
-// Faqat o'qilmagan soni (yengil)
 router.get("/unread-count", async (req, res, next) => {
   try {
     const unread = await Notification.countDocuments({ user: req.user._id, read: false });
@@ -30,7 +25,6 @@ router.get("/unread-count", async (req, res, next) => {
   } catch (err) { next(err); }
 });
 
-// O'qilgan deb belgilash (id berilsa bitta, aks holda hammasi)
 router.post("/read", async (req, res, next) => {
   try {
     const { id } = req.body;

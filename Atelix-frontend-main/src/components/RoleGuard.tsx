@@ -9,7 +9,6 @@ interface Props {
   children: React.ReactNode;
 }
 
-/** Faqat berilgan rollardagi userlarga ruxsat beruvchi guard */
 export default function RoleGuard({ allow, children }: Props) {
   const { user, initialized, bootstrap } = useAuth();
   const router = useRouter();
@@ -25,7 +24,7 @@ export default function RoleGuard({ allow, children }: Props) {
       return;
     }
     if (!allow.includes(user.role)) {
-      // Rolga mos joyga yo'naltirish
+
       if (user.role === "tailor") router.replace("/tailor");
       else if (user.role === "customer") router.replace("/dashboard");
       else router.replace("/");

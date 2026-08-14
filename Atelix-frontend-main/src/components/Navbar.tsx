@@ -52,7 +52,6 @@ export default function Navbar() {
       }`}
     >
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6">
-        {/* Logo */}
         <Link href={homeHref} className="flex items-center gap-2.5 group">
           <span className="transition group-hover:scale-105">
             <LogoMark size={34} />
@@ -60,12 +59,10 @@ export default function Navbar() {
           <span className="font-display text-xl font-semibold tracking-tight text-ink-900">Atelix</span>
         </Link>
 
-        {/* O'ng klaster */}
         <div className="flex items-center gap-1 sm:gap-2">
         <ThemeToggle />
         {user && <NotificationBell />}
 
-        {/* Desktop nav */}
         <nav className="hidden md:flex items-center gap-1">
           {user?.role !== "tailor" &&
             navItem("/tailors", "Tikuvchilar", pathname?.startsWith("/tailors") || false)}
@@ -111,7 +108,6 @@ export default function Navbar() {
           )}
         </nav>
 
-        {/* Mobile burger */}
         <button
           onClick={() => setMenuOpen(!menuOpen)}
           className="md:hidden rounded-lg p-2 text-ink-700 hover:bg-ink-100"
@@ -128,7 +124,6 @@ export default function Navbar() {
         </div>
       </div>
 
-      {/* Mobile menu */}
       {menuOpen && (
         <div className="md:hidden border-t border-ink-200 bg-surface">
           <div className="mx-auto max-w-6xl px-4 py-4 space-y-1">

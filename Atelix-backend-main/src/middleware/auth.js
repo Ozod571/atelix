@@ -1,12 +1,8 @@
-/**
- * JWT auth + role middleware
- */
 const jwt = require("jsonwebtoken");
 const User = require("../models/User");
 
 const JWT_SECRET = process.env.JWT_SECRET || "atelix-dev-secret-change-me";
 
-/** Token majburiy: faqat tizimga kirgan foydalanuvchilar */
 async function protect(req, res, next) {
   try {
     const auth = req.headers.authorization;
@@ -34,7 +30,6 @@ async function protect(req, res, next) {
   }
 }
 
-/** Faqat ma'lum rollarga ruxsat */
 function requireRole(...roles) {
   return (req, res, next) => {
     if (!req.user || !roles.includes(req.user.role)) {

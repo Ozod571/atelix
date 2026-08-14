@@ -55,7 +55,6 @@ export default function RegisterPage() {
           <h1 className="font-display text-2xl font-semibold tracking-tight">Hisob yaratish</h1>
           <p className="mt-1 text-sm text-ink-500">Telefon raqamingiz bilan bir daqiqada.</p>
 
-          {/* Rol tanlash — katta, tushunarli kartalar */}
           <div className="mt-5 grid grid-cols-2 gap-3">
             {ROLES.map((r) => (
               <button

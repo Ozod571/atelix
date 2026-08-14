@@ -32,11 +32,10 @@ export default function TailorsPage() {
     }
   };
 
-  // Saralash o'zgarganda darhol yuklaymiz; qidiruvni debounce qilamiz
   useEffect(() => {
     const t = setTimeout(load, 300);
     return () => clearTimeout(t);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+
   }, [q, city, sort]);
 
   return (
@@ -50,7 +49,6 @@ export default function TailorsPage() {
           </p>
         </div>
 
-        {/* Filtrlar */}
         <div className="mt-8 grid grid-cols-1 sm:grid-cols-[1fr_auto_auto] gap-3">
           <input
             className="input"
@@ -71,7 +69,6 @@ export default function TailorsPage() {
           </select>
         </div>
 
-        {/* Ro'yxat */}
         <div className="mt-8">
           {loading ? (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">

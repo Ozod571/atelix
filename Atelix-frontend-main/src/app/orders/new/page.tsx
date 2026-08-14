@@ -109,7 +109,6 @@ function Content() {
         </div>
 
         <form onSubmit={submit} className="space-y-6">
-          {/* Tailor */}
           <div className="card">
             <div className="flex items-center justify-between gap-3">
               <label className="label mb-0">Tikuvchi</label>
@@ -168,7 +167,6 @@ function Content() {
             )}
           </div>
 
-          {/* Clothing */}
           <div className="card">
             <label className="label">Kiyim turi</label>
             <div className="mt-2 grid grid-cols-2 sm:grid-cols-3 gap-2">
@@ -187,7 +185,6 @@ function Content() {
             </div>
           </div>
 
-          {/* Measurement */}
           <div className="card">
             <label htmlFor="measurement" className="label">O'lchov</label>
             <select
@@ -205,7 +202,6 @@ function Content() {
             <p className="helper">Tanlangan o'lchov buyurtmaga biriktiriladi (snapshot saqlanadi).</p>
           </div>
 
-          {/* Notes */}
           <div className="card">
             <label htmlFor="notes" className="label">Izoh (ixtiyoriy)</label>
             <textarea

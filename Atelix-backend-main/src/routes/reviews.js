@@ -1,10 +1,3 @@
-/**
- * /api/reviews — buyurtma sharhlari
- *
- *  POST /            — mijoz tugagan buyurtmaga sharh qoldiradi
- *  GET  /order/:id   — buyurtma sharhini olish (mavjudligini tekshirish)
- *  GET  /tailor/:id  — tikuvchining barcha sharhlari (ochiq)
- */
 const express = require("express");
 const mongoose = require("mongoose");
 const Review = require("../models/Review");
@@ -14,7 +7,6 @@ const { protect, requireRole } = require("../middleware/auth");
 const router = express.Router();
 const isObjId = (s) => mongoose.isValidObjectId(s);
 
-// ─── OCHIQ: tikuvchining sharhlari ─────────────────────────────────────
 router.get("/tailor/:id", async (req, res, next) => {
   try {
     if (!isObjId(req.params.id)) return res.status(400).json({ error: "ID noto'g'ri" });
@@ -26,10 +18,8 @@ router.get("/tailor/:id", async (req, res, next) => {
   } catch (err) { next(err); }
 });
 
-// Quyidagilar tizimga kirishni talab qiladi
 router.use(protect);
 
-// ─── Buyurtma sharhini olish ───────────────────────────────────────────
 router.get("/order/:id", async (req, res, next) => {
   try {
     if (!isObjId(req.params.id)) return res.status(400).json({ error: "ID noto'g'ri" });
@@ -38,7 +28,6 @@ router.get("/order/:id", async (req, res, next) => {
   } catch (err) { next(err); }
 });
 
-// ─── MIJOZ: sharh qoldirish ────────────────────────────────────────────
 router.post("/", requireRole("customer"), async (req, res, next) => {
   try {
     const { orderId, rating, comment } = req.body;

@@ -1,9 +1,3 @@
-/**
- * Notification — foydalanuvchining in-app bildirishnomalari
- *
- * Buyurtma va xabar hodisalarida yaratiladi, socket orqali real-time
- * yetkaziladi va qo'ng'iroq belgisida o'qilmagan soni ko'rsatiladi.
- */
 const mongoose = require("mongoose");
 
 const notificationSchema = new mongoose.Schema(

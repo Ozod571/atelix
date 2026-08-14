@@ -1,6 +1,3 @@
-/**
- * Socket.io client — bitta ulanish butun sessiya davomida qayta ishlatiladi
- */
 import { io, Socket } from "socket.io-client";
 
 const API_BASE = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
@@ -22,7 +19,7 @@ export function getSocket(): Socket | null {
       autoConnect: true,
     });
   } else {
-    // Token yangilangan bo'lishi mumkin
+
     socket.auth = { token };
     if (!socket.connected) socket.connect();
   }

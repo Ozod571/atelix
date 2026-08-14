@@ -28,15 +28,13 @@ export default function NotificationBell() {
       setItems(res.items || []);
       setUnread(res.unread || 0);
     } catch {
-      /* jim */
-    }
+          }
   };
 
   useEffect(() => {
     load();
   }, []);
 
-  // Real-time bildirishnomalar
   useEffect(() => {
     const socket = getSocket();
     if (!socket) return;
@@ -51,7 +49,6 @@ export default function NotificationBell() {
     };
   }, []);
 
-  // Tashqariga bosilganda yopish
   useEffect(() => {
     const onClick = (e: MouseEvent) => {
       if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false);

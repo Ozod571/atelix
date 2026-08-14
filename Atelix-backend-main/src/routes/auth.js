@@ -1,6 +1,3 @@
-/**
- * /api/auth — register, login, me
- */
 const express = require("express");
 const jwt = require("jsonwebtoken");
 const User = require("../models/User");
@@ -13,7 +10,6 @@ const JWT_EXPIRES = process.env.JWT_EXPIRES || "30d";
 
 const sign = (id) => jwt.sign({ id }, JWT_SECRET, { expiresIn: JWT_EXPIRES });
 
-/** Foydalanuvchi javob formati */
 const respond = (res, status, user) =>
   res.status(status).json({
     success: true,
@@ -21,7 +17,6 @@ const respond = (res, status, user) =>
     user,
   });
 
-// ─── REGISTER (telefon + parol) ───────────────────────────────────────────────
 router.post("/register", async (req, res, next) => {
   try {
     const { name, password, phone, role, email } = req.body;
@@ -51,7 +46,7 @@ router.post("/register", async (req, res, next) => {
       password,
       role: requestedRole,
       email: email ? email.toLowerCase().trim() : undefined,
-      // Tikuvchi qo'shimcha ma'lumotlarni keyin profil sahifasida to'ldiradi
+
     });
 
     respond(res, 201, user);
@@ -64,7 +59,6 @@ router.post("/register", async (req, res, next) => {
   }
 });
 
-// ─── LOGIN (telefon + parol; email bilan ham ishlaydi) ─────────────────────────
 router.post("/login", async (req, res, next) => {
   try {
     const { phone, email, password } = req.body;
@@ -73,7 +67,6 @@ router.post("/login", async (req, res, next) => {
       return res.status(400).json({ error: "Telefon va parol kiriting" });
     }
 
-    // '@' bo'lsa email, aks holda telefon
     const query = String(identifier).includes("@")
       ? { email: String(identifier).toLowerCase().trim() }
       : { phone: normalizePhone(identifier) };
@@ -95,12 +88,10 @@ router.post("/login", async (req, res, next) => {
   }
 });
 
-// ─── ME ──────────────────────────────────────────────────────────────────────
 router.get("/me", protect, (req, res) => {
   res.json({ success: true, user: req.user });
 });
 
-// ─── PROFILNI YANGILASH ───────────────────────────────────────────────────────
 router.put("/me", protect, async (req, res, next) => {
   try {
     const user = await User.findById(req.user._id);
@@ -109,7 +100,6 @@ router.put("/me", protect, async (req, res, next) => {
     const b = req.body;
     const toNum = (v) => { const n = Number(v); return Number.isNaN(n) ? undefined : n; };
 
-    // Barcha foydalanuvchilar uchun
     if (b.name !== undefined) user.name = b.name.toString().trim();
     if (b.phone !== undefined) user.phone = b.phone.toString().trim();
     if (b.avatar !== undefined) {
@@ -118,7 +108,6 @@ router.put("/me", protect, async (req, res, next) => {
       else return res.status(400).json({ error: "Avatar rasmi noto'g'ri yoki juda katta" });
     }
 
-    // Faqat tikuvchilar uchun
     if (user.role === "tailor") {
       if (b.shopName !== undefined) user.shopName = b.shopName.toString().trim();
       if (b.city !== undefined) user.city = b.city.toString().trim();

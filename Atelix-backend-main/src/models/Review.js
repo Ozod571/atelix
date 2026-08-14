@@ -1,10 +1,3 @@
-/**
- * Review — mijoz tugagan buyurtma uchun tikuvchiga qoldiradigan sharh
- *
- * Har bir buyurtmaga faqat bitta sharh (order unique).
- * Sharh yaratilgach/o'chirilgach tikuvchining ratingAvg/ratingCount
- * qiymatlari qayta hisoblanadi (recomputeTailorRating).
- */
 const mongoose = require("mongoose");
 
 const reviewSchema = new mongoose.Schema(
@@ -24,7 +17,7 @@ const reviewSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "Order",
       required: true,
-      unique: true, // bitta buyurtma — bitta sharh
+      unique: true,
     },
     rating: {
       type: Number,
@@ -43,10 +36,6 @@ const reviewSchema = new mongoose.Schema(
 
 reviewSchema.index({ tailor: 1, createdAt: -1 });
 
-/**
- * Berilgan tikuvchining o'rtacha bahosi va sharhlar sonini qayta hisoblab,
- * User hujjatiga yozadi.
- */
 reviewSchema.statics.recomputeTailorRating = async function (tailorId) {
   const User = mongoose.model("User");
   const agg = await this.aggregate([
@@ -56,7 +45,7 @@ reviewSchema.statics.recomputeTailorRating = async function (tailorId) {
 
   const { avg = 0, count = 0 } = agg[0] || {};
   await User.findByIdAndUpdate(tailorId, {
-    ratingAvg: Math.round(avg * 10) / 10, // 1 xona aniqlik
+    ratingAvg: Math.round(avg * 10) / 10,
     ratingCount: count,
   });
 };

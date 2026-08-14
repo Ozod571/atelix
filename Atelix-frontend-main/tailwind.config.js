@@ -1,4 +1,3 @@
-/** @type {import('tailwindcss').Config} */
 module.exports = {
   content: ["./src/**/*.{js,ts,jsx,tsx,mdx}"],
   darkMode: "class",
@@ -9,7 +8,7 @@ module.exports = {
         display: ["var(--font-display)", "Manrope", "Inter", "system-ui", "sans-serif"],
       },
       colors: {
-        // CSS o'zgaruvchilariga asoslangan palitra — dark rejimda avtomatik almashadi
+
         ink: {
           900: "rgb(var(--ink-900) / <alpha-value>)",
           800: "rgb(var(--ink-800) / <alpha-value>)",

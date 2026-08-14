@@ -59,10 +59,9 @@ export default function TailorProfilePage() {
       <main className="mx-auto max-w-4xl px-4 sm:px-6 py-10">
         <Link href="/tailors" className="text-sm text-ink-500 hover:text-ink-900">← Katalog</Link>
 
-        {/* Sarlavha */}
         <div className="mt-4 flex flex-col sm:flex-row sm:items-center gap-5">
           {tailor.avatar ? (
-            // eslint-disable-next-line @next/next/no-img-element
+
             <img src={tailor.avatar} alt={tailor.shopName || tailor.name} className="h-20 w-20 shrink-0 rounded-2xl object-cover ring-1 ring-ink-200" />
           ) : (
             <div className="flex h-20 w-20 shrink-0 items-center justify-center rounded-2xl bg-ink-900 text-white text-2xl font-semibold">
@@ -80,7 +79,6 @@ export default function TailorProfilePage() {
           </div>
         </div>
 
-        {/* Ma'lumot kartalari */}
         <div className="mt-8 grid grid-cols-2 sm:grid-cols-3 gap-4">
           <Info label="Tajriba" value={tailor.experienceYears ? `${tailor.experienceYears} yil` : "—"} />
           <Info label="Boshlang'ich narx" value={tailor.priceFrom ? formatPrice(tailor.priceFrom) : "Kelishiladi"} />
@@ -94,7 +92,6 @@ export default function TailorProfilePage() {
           </div>
         )}
 
-        {/* CTA */}
         <div className="mt-6 flex flex-wrap items-center gap-3">
           {user?.role === "tailor" ? null : (
             <Link href={orderHref} className="btn-primary">
@@ -106,7 +103,6 @@ export default function TailorProfilePage() {
           )}
         </div>
 
-        {/* Portfolio */}
         {tailor.portfolio && tailor.portfolio.length > 0 && (
           <section className="mt-10">
             <h2 className="text-xl font-semibold tracking-tight">Ish namunalari</h2>
@@ -119,7 +115,6 @@ export default function TailorProfilePage() {
                   rel="noreferrer"
                   className="aspect-square overflow-hidden rounded-xl ring-1 ring-ink-200 transition hover:opacity-90"
                 >
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img src={src} alt={`Namuna ${i + 1}`} className="h-full w-full object-cover" />
                 </a>
               ))}
@@ -127,7 +122,6 @@ export default function TailorProfilePage() {
           </section>
         )}
 
-        {/* Sharhlar */}
         <section className="mt-12">
           <h2 className="text-xl font-semibold tracking-tight">Mijozlar sharhlari</h2>
           {reviews.length === 0 ? (

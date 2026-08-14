@@ -60,7 +60,6 @@ function Content() {
           </div>
         </div>
 
-        {/* Stats */}
         {filter === "" && (
           <div className="mt-6 grid grid-cols-3 gap-3">
             <StatCard label="Yangi" value={stats.pending} />
@@ -69,7 +68,6 @@ function Content() {
           </div>
         )}
 
-        {/* Filters */}
         <div className="mt-6 flex flex-wrap gap-2">
           {FILTERS.map((f) => (
             <button
@@ -86,7 +84,6 @@ function Content() {
           ))}
         </div>
 
-        {/* List */}
         <div className="mt-6">
           {loading ? (
             <div className="card text-sm text-ink-500">Yuklanmoqda...</div>

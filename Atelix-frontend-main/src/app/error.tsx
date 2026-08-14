@@ -10,7 +10,7 @@ export default function Error({
   reset: () => void;
 }) {
   useEffect(() => {
-    // Ishlab chiqarishda bu yerga xatolik monitoringi (Sentry va h.k.) ulanadi
+
     console.error(error);
   }, [error]);
 

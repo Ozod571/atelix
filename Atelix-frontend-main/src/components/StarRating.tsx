@@ -1,13 +1,10 @@
 "use client";
 
 interface Props {
-  /** 0–5 (kasr bo'lishi mumkin — yarim yulduzcha uchun) */
-  value: number;
-  /** Sharhlar soni (ixtiyoriy, yonida ko'rsatiladi) */
-  count?: number;
+    value: number;
+    count?: number;
   size?: "sm" | "md" | "lg";
-  /** Tanlash rejimi — bosilganda onChange chaqiriladi */
-  interactive?: boolean;
+    interactive?: boolean;
   onChange?: (v: number) => void;
   className?: string;
 }
@@ -15,7 +12,7 @@ interface Props {
 const SIZES = { sm: "h-4 w-4", md: "h-5 w-5", lg: "h-7 w-7" };
 
 function Star({ fill, className }: { fill: number; className: string }) {
-  // fill: 0..1 — yulduzchaning to'ldirilgan ulushi
+
   const id = `star-${Math.random().toString(36).slice(2, 9)}`;
   return (
     <svg className={className} viewBox="0 0 24 24" aria-hidden="true">

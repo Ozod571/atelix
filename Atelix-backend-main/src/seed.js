@@ -1,7 +1,3 @@
-/**
- * Sample data seed
- * Foydalanish: node src/seed.js
- */
 require("dotenv").config();
 const mongoose = require("mongoose");
 const User = require("./models/User");
@@ -13,15 +9,14 @@ const MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost:27017/atelix
 
 async function run() {
   await mongoose.connect(MONGODB_URI);
-  console.log("✅ MongoDB ulandi");
+  console.log("MongoDB ulandi");
 
   await User.deleteMany({});
   await Measurement.deleteMany({});
   await Order.deleteMany({});
   await Review.deleteMany({});
-  console.log("🧹 Eski ma'lumotlar tozalandi");
+  console.log("Eski ma'lumotlar tozalandi");
 
-  // Mijozlar (telefon — asosiy identifikator, 998XXXXXXXXX)
   const ali = await User.create({
     name: "Ali Karimov",
     phone: "998901112233",
@@ -36,7 +31,6 @@ async function run() {
     role: "customer",
   });
 
-  // Tikuvchilar
   const aziza = await User.create({
     name: "Aziza opa",
     phone: "998907778899",
@@ -61,7 +55,6 @@ async function run() {
     priceFrom: 500000,
   });
 
-  // Admin
   await User.create({
     name: "Admin",
     phone: "998900000000",
@@ -69,7 +62,6 @@ async function run() {
     role: "admin",
   });
 
-  // Ali uchun o'lchov (13 maydon, sm)
   const aliMeasurement = await Measurement.create({
     user: ali._id,
     title: "Asosiy o'lchovim",
@@ -84,7 +76,6 @@ async function run() {
     notes: "Standart ko'ylak uchun",
   });
 
-  // Dilnoza uchun o'lchov
   const dilnozaMeasurement = await Measurement.create({
     user: dilnoza._id,
     title: "Ko'ylak uchun",
@@ -110,7 +101,6 @@ async function run() {
     return o;
   };
 
-  // Sample orders
   await Order.create({
     customer: ali._id,
     tailor: sherzod._id,
@@ -133,7 +123,6 @@ async function run() {
     reviewed: true,
   });
 
-  // Sample review
   await Review.create({
     tailor: aziza._id,
     customer: dilnoza._id,
@@ -143,14 +132,14 @@ async function run() {
   });
   await Review.recomputeTailorRating(aziza._id);
 
-  console.log("\n✅ Sample ma'lumotlar yaratildi (telefon + parol):\n");
-  console.log("👤 Mijozlar:");
+  console.log("\nSample ma'lumotlar yaratildi (telefon + parol):\n");
+  console.log("Mijozlar:");
   console.log("   +998 90 111 22 33 / parol123");
   console.log("   +998 90 444 55 66 / parol123");
-  console.log("✂️  Tikuvchilar:");
+  console.log("Tikuvchilar:");
   console.log("   +998 90 777 88 99 / parol123");
   console.log("   +998 90 123 45 67 / parol123");
-  console.log("👑 Admin:");
+  console.log("Admin:");
   console.log("   +998 90 000 00 00 / admin123\n");
 
   await mongoose.disconnect();
@@ -158,6 +147,6 @@ async function run() {
 }
 
 run().catch((err) => {
-  console.error("❌ Seed xatosi:", err);
+  console.error("Seed xatosi:", err);
   process.exit(1);
 });

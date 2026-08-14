@@ -3,11 +3,9 @@
 interface Props {
   withText?: boolean;
   className?: string;
-  /** Belgi o'lchami (px) */
-  size?: number;
+    size?: number;
 }
 
-/** Igna va ip — Atelix tikuvchilik brendi belgisi */
 export function LogoMark({ size = 34 }: { size?: number }) {
   return (
     <span
@@ -23,11 +21,8 @@ export function LogoMark({ size = 34 }: { size?: number }) {
         strokeLinecap="round"
         strokeLinejoin="round"
       >
-        {/* Igna */}
         <path d="M5 19 L16.5 7.5" strokeWidth="1.9" />
-        {/* Igna ko'zi */}
         <circle cx="17.6" cy="6.4" r="1.7" strokeWidth="1.4" />
-        {/* Ip halqasi */}
         <path d="M5 19 c-1.7 .6 -1.9 2.7 0 3.1 c1.6 .3 2.4 -1.3 1.2 -2.3" strokeWidth="1.4" opacity="0.9" />
       </svg>
     </span>

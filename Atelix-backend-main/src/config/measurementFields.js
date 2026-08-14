@@ -1,12 +1,3 @@
-/**
- * Markazlashgan o'lchov maydonlari (sm)
- * ────────────────────────────────────────────────────────────
- * Bir joyda e'lon qilinadi — Measurement modeli, Order snapshot,
- * routelar va seed shu ro'yxatdan foydalanadi. Frontenddagi
- * lib/constants.ts dagi MEASUREMENT_FIELDS bilan bir xil bo'lishi kerak.
- *
- * Manba: mijozning qo'lda yozgan 13 o'lchov ro'yxati.
- */
 const MEASUREMENT_FIELDS = [
   { key: "height",        label: "Bo'y (umumiy uzunlik)",     min: 100, max: 220 },
   { key: "chest",         label: "Ko'krak aylanasi",          min: 40,  max: 200 },

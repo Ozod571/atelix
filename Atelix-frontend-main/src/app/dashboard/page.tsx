@@ -45,7 +45,6 @@ function DashboardContent() {
           </div>
         </div>
 
-        {/* Quick actions */}
         <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-4">
           <Link
             href="/measurements/new"
@@ -74,7 +73,6 @@ function DashboardContent() {
           </Link>
         </div>
 
-        {/* Measurements */}
         <section className="mt-12">
           <div className="flex items-baseline justify-between">
             <h2 className="text-xl font-semibold tracking-tight">Mening o'lchovlarim</h2>
@@ -118,7 +116,6 @@ function DashboardContent() {
           )}
         </section>
 
-        {/* Recent orders */}
         <section className="mt-12">
           <div className="flex items-baseline justify-between">
             <h2 className="text-xl font-semibold tracking-tight">Yaqinda yuborilgan buyurtmalar</h2>

@@ -21,7 +21,6 @@ export interface User {
   createdAt: string;
 }
 
-/** O'lchov qiymatlari — barcha maydonlar (sm) */
 export type MeasurementValues = Record<MeasurementKey, number>;
 
 export interface Measurement extends MeasurementValues {

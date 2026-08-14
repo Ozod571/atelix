@@ -19,7 +19,6 @@ export const STATUS_LABELS: Record<OrderStatus, { label: string; color: string }
   cancelled: { label: "Bekor qilindi",   color: "bg-neutral-100 text-neutral-700 ring-neutral-200" },
 };
 
-/** O'lchov maydon kalitlari — backenddagi config/measurementFields.js bilan bir xil */
 export type MeasurementKey =
   | "height"
   | "chest"
@@ -35,7 +34,6 @@ export type MeasurementKey =
   | "shoulderWidth"
   | "pantsWidth";
 
-/** O'lchov maydonlari ro'yxati — formada ham, ko'rsatishda ham ishlatiladi */
 export interface MeasurementFieldDef {
   key: MeasurementKey;
   label: string;
@@ -61,13 +59,11 @@ export const MEASUREMENT_FIELDS: MeasurementFieldDef[] = [
   { key: "pantsWidth",    label: "Lozim/bryuk kengligi",   helper: "Lozim pochasining kengligi",            min: 8,   max: 80,  placeholder: "Masalan: 24" },
 ];
 
-/** Narxni so'mda chiroyli formatlash */
 export const formatPrice = (v?: number | null): string => {
   if (v === undefined || v === null || Number.isNaN(v)) return "—";
   return new Intl.NumberFormat("uz-UZ").format(v) + " so'm";
 };
 
-/** Reyting saralash variantlari (storefront) */
 export const TAILOR_SORTS: { value: string; label: string }[] = [
   { value: "rating", label: "Reyting bo'yicha" },
   { value: "price",  label: "Arzon narx" },

@@ -29,7 +29,6 @@ export default function OrderChat({ orderId, currentUserId }: Props) {
     setMessages((prev) => (prev.some((m) => m._id === msg._id) ? prev : [...prev, msg]));
   };
 
-  // Tarixni yuklash
   useEffect(() => {
     (async () => {
       try {
@@ -43,7 +42,6 @@ export default function OrderChat({ orderId, currentUserId }: Props) {
     })();
   }, [orderId]);
 
-  // Socket ulanish
   useEffect(() => {
     const socket = getSocket();
     if (!socket) return;
@@ -81,7 +79,6 @@ export default function OrderChat({ orderId, currentUserId }: Props) {
     };
   }, [orderId]);
 
-  // Yangi xabarda pastga aylantirish
   useEffect(() => {
     scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight, behavior: "smooth" });
   }, [messages, typingName]);
@@ -96,13 +93,13 @@ export default function OrderChat({ orderId, currentUserId }: Props) {
       socket.emit("message:send", { orderId, text: clean }, (ack: { ok?: boolean; error?: string; message?: ChatMessage }) => {
         if (ack?.error) {
           toast.error(ack.error);
-          setText(clean); // qaytarib qo'yamiz
+          setText(clean);
         } else if (ack?.message) {
           addMessage(ack.message);
         }
       });
     } else {
-      // Socket yo'q — REST zaxira
+
       try {
         const res = await orderApi.sendMessage(orderId, clean);
         if (res.message) addMessage(res.message);

@@ -15,7 +15,6 @@ export default function HomePage() {
     <div className="bg-surface">
       <Navbar />
 
-      {/* ════════════════════ HERO ════════════════════ */}
       <section className="relative overflow-hidden">
         <div
           className="absolute inset-0 -z-10 opacity-[0.04]"
@@ -77,7 +76,6 @@ export default function HomePage() {
           </div>
         </div>
 
-        {/* Hero mockup */}
         <div className="mx-auto max-w-5xl px-4 sm:px-6 -mt-12 pb-20">
           <div className="relative rounded-3xl border border-ink-200/70 bg-surface shadow-2xl shadow-ink-900/5 overflow-hidden">
             <div className="flex items-center gap-1.5 border-b border-ink-100 px-4 py-3">
@@ -107,7 +105,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ════════════════════ FEATURES ════════════════════ */}
       <section className="border-t border-ink-100 py-24 sm:py-32 bg-ink-50/50">
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <div className="max-w-2xl">
@@ -129,7 +126,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ════════════════════ HOW IT WORKS ════════════════════ */}
       <section className="border-t border-ink-100 py-24 sm:py-32">
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <div className="text-center max-w-2xl mx-auto">
@@ -146,7 +142,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ════════════════════ FOR ROLES ════════════════════ */}
       <section className="border-t border-ink-100 py-24 sm:py-32 bg-ink-50/50">
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <div className="text-center max-w-2xl mx-auto">
@@ -185,7 +180,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ════════════════════ FAQ ════════════════════ */}
       <section className="border-t border-ink-100 py-24 sm:py-32">
         <div className="mx-auto max-w-3xl px-4 sm:px-6">
           <div className="text-center">
@@ -203,7 +197,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ════════════════════ CTA ════════════════════ */}
       <section className="border-t border-ink-100 py-24 sm:py-32">
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <div className="relative overflow-hidden rounded-3xl bg-neutral-900 p-12 sm:p-20 text-center">
@@ -247,7 +240,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ════════════════════ FOOTER ════════════════════ */}
       <footer className="border-t border-ink-100 py-12">
         <div className="mx-auto max-w-6xl px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-2">
@@ -260,8 +252,6 @@ export default function HomePage() {
     </div>
   );
 }
-
-/* ───── Sub-components ───── */
 
 function Check() {
   return (
@@ -357,8 +347,6 @@ function FAQ({ q, a }: { q: string; a: string }) {
     </details>
   );
 }
-
-/* ───── Icons ───── */
 
 function RulerIcon()  { return (<svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}><path strokeLinecap="round" strokeLinejoin="round" d="M3 21l18-18M7 17l-2-2m4 0l-2-2m4 0l-2-2m4 0l-2-2m4 0l-2-2" /></svg>); }
 function UsersIcon()  { return (<svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}><path strokeLinecap="round" strokeLinejoin="round" d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z" /></svg>); }

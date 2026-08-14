@@ -1,17 +1,13 @@
-# Bog'liqliklar
 node_modules/
 */node_modules/
 
-# Build natijalari
 .next/
 */.next/
 dist/
 build/
 
-# TypeScript cache
 *.tsbuildinfo
 
-# Muhit sirlari — HECH QACHON commit qilmang
 .env
 .env.*
 !.env.example
@@ -19,12 +15,12 @@ build/
 */.env.*
 !*/.env.example
 
-# Loglar
+_upd_*.zip
+
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-# OS / muharrir
 .DS_Store
 Thumbs.db
 .vscode/

@@ -17,7 +17,6 @@ interface StepDef {
   keys: MeasurementKey[];
 }
 
-// O'lchovlarni mantiqiy bosqichlarga bo'lamiz
 const STEPS: StepDef[] = [
   {
     title: "Yuqori tana",
@@ -109,10 +108,10 @@ export default function MeasurementForm({ initial, onSaved, redirectTo }: Props)
 
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Barcha bosqichlarni tekshiramiz
+
     const allKeys = MEASUREMENT_FIELDS.map((f) => f.key);
     if (!validateKeys(allKeys)) {
-      // Xato bo'lgan birinchi bosqichga o'tamiz
+
       const badStep = STEPS.findIndex((st) => st.keys.some((k) => {
         const raw = values[k]; const num = Number(raw);
         return raw === undefined || raw === "" || Number.isNaN(num) || num < FIELD_BY_KEY[k].min || num > FIELD_BY_KEY[k].max;
@@ -146,7 +145,6 @@ export default function MeasurementForm({ initial, onSaved, redirectTo }: Props)
 
   return (
     <form onSubmit={submit} className="space-y-6">
-      {/* Nom */}
       <div className="card">
         <label className="label" htmlFor="title">Nom</label>
         <input
@@ -159,7 +157,6 @@ export default function MeasurementForm({ initial, onSaved, redirectTo }: Props)
         <p className="helper">Bir nechta o'lchovingiz bo'lsa, ularni nom orqali ajratasiz.</p>
       </div>
 
-      {/* Progress */}
       <div className="card">
         <div className="flex items-center justify-between text-sm">
           <span className="font-medium text-ink-900">To'ldirilgan: {filledCount}/{MEASUREMENT_FIELDS.length}</span>
@@ -168,7 +165,6 @@ export default function MeasurementForm({ initial, onSaved, redirectTo }: Props)
         <div className="mt-2 h-2 w-full overflow-hidden rounded-full bg-ink-100">
           <div className="h-full rounded-full bg-accent transition-all" style={{ width: `${progress}%` }} />
         </div>
-        {/* Bosqich indikatorlari */}
         <div className="mt-4 flex gap-2">
           {STEPS.map((st, i) => (
             <button
@@ -185,10 +181,8 @@ export default function MeasurementForm({ initial, onSaved, redirectTo }: Props)
         </div>
       </div>
 
-      {/* Bosqich: figura + maydonlar */}
       <div className="card">
         <div className="grid grid-cols-1 md:grid-cols-[140px_1fr] gap-6">
-          {/* Figura */}
           <div className="flex flex-col items-center">
             <BodyFigure active={current.region} className="h-56 w-auto" />
             <div className="mt-3 text-center">
@@ -197,7 +191,6 @@ export default function MeasurementForm({ initial, onSaved, redirectTo }: Props)
             </div>
           </div>
 
-          {/* Maydonlar */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
             {current.keys.map((key) => {
               const f = FIELD_BY_KEY[key];
@@ -229,7 +222,6 @@ export default function MeasurementForm({ initial, onSaved, redirectTo }: Props)
           </div>
         </div>
 
-        {/* Bosqich navigatsiyasi */}
         <div className="mt-6 flex items-center justify-between">
           <button
             type="button"
@@ -249,7 +241,6 @@ export default function MeasurementForm({ initial, onSaved, redirectTo }: Props)
         </div>
       </div>
 
-      {/* Izoh */}
       <div className="card">
         <label className="label" htmlFor="notes">Qo'shimcha izoh (ixtiyoriy)</label>
         <textarea
@@ -263,7 +254,6 @@ export default function MeasurementForm({ initial, onSaved, redirectTo }: Props)
         <p className="helper">{notes.length}/500</p>
       </div>
 
-      {/* Yakuniy amallar */}
       <div className="flex flex-col-reverse sm:flex-row sm:justify-end gap-3">
         <button type="button" onClick={() => router.back()} className="btn-secondary">
           Bekor qilish

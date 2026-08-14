@@ -1,14 +1,6 @@
-/**
- * Measurement — foydalanuvchi qo'lda kiritadigan tana o'lchovlari (cm)
- *
- * Maydonlar markazlashgan config/measurementFields.js dan olinadi,
- * shuning uchun yangi o'lchov qo'shish/olib tashlash uchun faqat
- * o'sha faylni o'zgartirish kifoya.
- */
 const mongoose = require("mongoose");
 const { MEASUREMENT_FIELDS } = require("../config/measurementFields");
 
-// Yagona maydon validator: number, cm, min/max, majburiy
 const cmField = (label, min, max) => ({
   type: Number,
   required: [true, `${label} majburiy`],

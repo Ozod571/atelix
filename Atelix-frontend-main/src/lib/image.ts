@@ -1,7 +1,3 @@
-/**
- * Rasmni brauzerda siqib, data URL (base64) ga aylantiradi.
- * Server tomonga yuborishdan oldin hajmni kichraytiradi.
- */
 export async function fileToCompressedDataURL(
   file: File,
   maxDim = 1000,
@@ -36,9 +32,8 @@ export async function fileToCompressedDataURL(
   canvas.width = width;
   canvas.height = height;
   const ctx = canvas.getContext("2d");
-  if (!ctx) return dataUrl; // fallback
+  if (!ctx) return dataUrl;
   ctx.drawImage(img, 0, 0, width, height);
 
-  // GIF/PNG shaffofligi bo'lmasa JPEG eng ixcham
   return canvas.toDataURL("image/jpeg", quality);
 }

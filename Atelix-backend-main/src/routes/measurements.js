@@ -1,6 +1,3 @@
-/**
- * /api/measurements — mijozlar o'lchovlarini boshqaradi
- */
 const express = require("express");
 const Measurement = require("../models/Measurement");
 const { protect, requireRole } = require("../middleware/auth");
@@ -8,13 +5,10 @@ const { MEASUREMENT_KEYS } = require("../config/measurementFields");
 
 const router = express.Router();
 
-// Customer-only
 router.use(protect, requireRole("customer", "admin"));
 
-// Qabul qilinadigan maydonlar: meta + markazlashgan o'lchovlar
 const FIELDS = ["title", ...MEASUREMENT_KEYS, "notes"];
 
-// O'lchov ro'yxati
 router.get("/", async (req, res, next) => {
   try {
     const items = await Measurement.find({ user: req.user._id }).sort({ createdAt: -1 });
@@ -24,7 +18,6 @@ router.get("/", async (req, res, next) => {
   }
 });
 
-// Eng oxirgi o'lchovni olish (forma uchun qulay)
 router.get("/latest", async (req, res, next) => {
   try {
     const item = await Measurement.findOne({ user: req.user._id }).sort({ createdAt: -1 });
@@ -34,7 +27,6 @@ router.get("/latest", async (req, res, next) => {
   }
 });
 
-// Bitta o'lchov
 router.get("/:id", async (req, res, next) => {
   try {
     const item = await Measurement.findOne({ _id: req.params.id, user: req.user._id });
@@ -45,7 +37,6 @@ router.get("/:id", async (req, res, next) => {
   }
 });
 
-// Yangi o'lchov yaratish
 router.post("/", async (req, res, next) => {
   try {
     const data = { user: req.user._id };
@@ -62,7 +53,6 @@ router.post("/", async (req, res, next) => {
   }
 });
 
-// Tahrirlash
 router.put("/:id", async (req, res, next) => {
   try {
     const item = await Measurement.findOne({ _id: req.params.id, user: req.user._id });
@@ -81,7 +71,6 @@ router.put("/:id", async (req, res, next) => {
   }
 });
 
-// O'chirish
 router.delete("/:id", async (req, res, next) => {
   try {
     const item = await Measurement.findOneAndDelete({ _id: req.params.id, user: req.user._id });

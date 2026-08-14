@@ -1,12 +1,3 @@
-/**
- * Socket.io real-time chat
- * ────────────────────────────────────────────────────────────
- *  - Handshake'da JWT tekshiriladi
- *  - Foydalanuvchi faqat o'zi ishtirok etgan buyurtma xonasiga qo'shila oladi
- *  - Xabar saqlanadi va o'sha xonadagilarga tarqatiladi
- *
- * Xonalar nomi: `order:<orderId>`
- */
 const jwt = require("jsonwebtoken");
 const { JWT_SECRET } = require("./middleware/auth");
 const User = require("./models/User");
@@ -14,7 +5,6 @@ const Order = require("./models/Order");
 const Message = require("./models/Message");
 const { createNotification } = require("./notify");
 
-/** Foydalanuvchi shu buyurtma ishtirokchisimi? */
 function isParticipant(order, userId, role) {
   const uid = userId.toString();
   return (
@@ -25,7 +15,7 @@ function isParticipant(order, userId, role) {
 }
 
 function initSocket(io) {
-  // ── Handshake autentifikatsiyasi ───────────────────────────
+
   io.use(async (socket, next) => {
     try {
       const token = socket.handshake.auth?.token || socket.handshake.query?.token;
@@ -42,14 +32,11 @@ function initSocket(io) {
     }
   });
 
-  // ── Ulanish ─────────────────────────────────────────────────
   io.on("connection", (socket) => {
     const room = (orderId) => `order:${orderId}`;
 
-    // Shaxsiy bildirishnoma xonasi
     socket.join(`user:${socket.user._id.toString()}`);
 
-    // Buyurtma xonasiga qo'shilish
     socket.on("order:join", async (orderId, cb) => {
       try {
         const order = await Order.findById(orderId);
@@ -64,7 +51,6 @@ function initSocket(io) {
       }
     });
 
-    // Xabar yuborish
     socket.on("message:send", async ({ orderId, text } = {}, cb) => {
       try {
         const clean = (text || "").toString().trim().slice(0, 2000);
@@ -93,7 +79,6 @@ function initSocket(io) {
         io.to(room(orderId)).emit("message:new", payload);
         cb?.({ ok: true, message: payload });
 
-        // Ikkinchi ishtirokchiga bildirishnoma
         const recipient = order.customer.toString() === socket.user._id.toString() ? order.tailor : order.customer;
         createNotification(io, {
           user: recipient,
@@ -107,7 +92,6 @@ function initSocket(io) {
       }
     });
 
-    // "Yozmoqda..." indikatori
     socket.on("typing", ({ orderId } = {}) => {
       if (!orderId) return;
       socket.to(room(orderId)).emit("typing", { name: socket.user.name });

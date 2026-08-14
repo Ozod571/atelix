@@ -4,11 +4,9 @@ import toast from "react-hot-toast";
 import { fileToCompressedDataURL } from "@/lib/image";
 
 interface Props {
-  /** Bitta rasm (avatar/natija) */
-  value?: string;
+    value?: string;
   onChange?: (dataUrl: string | null) => void;
-  /** Galereya rejimi */
-  gallery?: boolean;
+    gallery?: boolean;
   images?: string[];
   onImagesChange?: (imgs: string[]) => void;
   maxImages?: number;
@@ -68,7 +66,6 @@ export default function ImageUpload({
         <div className="grid grid-cols-3 sm:grid-cols-4 gap-3">
           {images.map((src, i) => (
             <div key={i} className="group relative aspect-square overflow-hidden rounded-xl ring-1 ring-ink-200">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src={src} alt={`Rasm ${i + 1}`} className="h-full w-full object-cover" />
               <button
                 type="button"
@@ -98,7 +95,7 @@ export default function ImageUpload({
             }`}
           >
             {value ? (
-              // eslint-disable-next-line @next/next/no-img-element
+
               <img src={value} alt="preview" className="h-full w-full object-cover" />
             ) : (
               <span className="text-2xl text-ink-300">🖼️</span>

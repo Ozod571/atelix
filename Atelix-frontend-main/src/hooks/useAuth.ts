@@ -1,6 +1,3 @@
-/**
- * Zustand auth store
- */
 import { create } from "zustand";
 import { authApi } from "@/lib/api";
 import type { User } from "@/types";
@@ -45,7 +42,7 @@ export const useAuth = create<AuthState>((set, get) => ({
     if (token && userStr) {
       try {
         set({ token, user: JSON.parse(userStr), initialized: true });
-        // background refresh
+
         get().refresh().catch(() => {});
         return;
       } catch {
@@ -91,7 +88,7 @@ export const useAuth = create<AuthState>((set, get) => ({
       localStorage.setItem("atelix_user", JSON.stringify(data.user));
       set({ user: data.user });
     } catch {
-      // 401 interceptor o'zi tozalaydi
+
     }
   },
 

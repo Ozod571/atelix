@@ -1,9 +1,3 @@
-/**
- * Message — buyurtma ichidagi mijoz ↔ tikuvchi yozishuvi
- *
- * Har bir xabar bitta buyurtmaga bog'liq. Faqat o'sha buyurtmaning
- * mijozi va tikuvchisi (va admin) yozishuvni ko'ra/yubora oladi.
- */
 const mongoose = require("mongoose");
 
 const messageSchema = new mongoose.Schema(

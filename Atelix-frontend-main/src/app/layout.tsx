@@ -9,7 +9,6 @@ const inter = Inter({
   display: "swap",
 });
 
-// Zamonaviy sans — sarlavhalar uchun (minimal tech uslubi)
 const manrope = Manrope({
   subsets: ["latin"],
   weight: ["500", "600", "700", "800"],
@@ -52,7 +51,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="uz" className={`${inter.variable} ${manrope.variable}`} suppressHydrationWarning>
       <head>
-        {/* Mavzuni bo'yashdan oldin o'rnatish — miltillashning oldini oladi */}
         <script
           dangerouslySetInnerHTML={{
             __html: `(function(){try{var t=localStorage.getItem('atelix_theme');if(t==='dark'||(!t&&window.matchMedia('(prefers-color-scheme: dark)').matches)){document.documentElement.classList.add('dark');}}catch(e){}})();`,

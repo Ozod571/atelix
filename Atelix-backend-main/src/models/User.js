@@ -1,6 +1,3 @@
-/**
- * User model — customer | tailor | admin
- */
 const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
 
@@ -13,14 +10,14 @@ const userSchema = new mongoose.Schema(
       minlength: [2, "Ism kamida 2 ta belgi bo'lishi kerak"],
       maxlength: [80, "Ism juda uzun"],
     },
-    // Endi asosiy identifikator — telefon raqami (998XXXXXXXXX)
+
     phone: {
       type: String,
       required: [true, "Telefon raqami majburiy"],
       trim: true,
       index: true,
     },
-    // Email ixtiyoriy (majburiy emas, noyoblik talab qilinmaydi)
+
     email: {
       type: String,
       lowercase: true,
@@ -39,22 +36,20 @@ const userSchema = new mongoose.Schema(
       default: "customer",
       index: true,
     },
-    // Tikuvchilar uchun qo'shimcha profil
+
     shopName: { type: String, trim: true, maxlength: 120 },
     city: { type: String, trim: true, maxlength: 60 },
     bio: { type: String, trim: true, maxlength: 500 },
     experienceYears: { type: Number, min: 0, max: 80 },
-    priceFrom: { type: Number, min: 0, max: 100000000 }, // boshlang'ich narx (so'm)
+    priceFrom: { type: Number, min: 0, max: 100000000 },
 
-    // Rasmlar (data URL sifatida saqlanadi — demo uchun; kengaytirilganda obyekt xotira)
-    avatar: { type: String }, // profil rasmi
+    avatar: { type: String },
     portfolio: {
       type: [String],
       default: [],
       validate: [(arr) => arr.length <= 12, "Ko'pi bilan 12 ta rasm"],
     },
 
-    // Reyting agregatsiyasi (sharhlardan hisoblanadi)
     ratingAvg: { type: Number, default: 0, min: 0, max: 5 },
     ratingCount: { type: Number, default: 0, min: 0 },
 
@@ -64,19 +59,16 @@ const userSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-// Parolni saqlashdan oldin shifrlash
 userSchema.pre("save", async function (next) {
   if (!this.isModified("password")) return next();
   this.password = await bcrypt.hash(this.password, 12);
   next();
 });
 
-// Parol tekshirish
 userSchema.methods.comparePassword = function (candidate) {
   return bcrypt.compare(candidate, this.password);
 };
 
-// JSON ga aylanganda parolni olib tashlash
 userSchema.methods.toJSON = function () {
   const obj = this.toObject();
   delete obj.password;

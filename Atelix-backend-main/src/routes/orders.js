@@ -1,10 +1,3 @@
-/**
- * /api/orders — buyurtma tizimi
- *
- * Status oqimi: pending → accepted → completed
- *                       ↘ rejected
- *               pending → cancelled (mijoz)
- */
 const express = require("express");
 const mongoose = require("mongoose");
 const Order = require("../models/Order");
@@ -30,9 +23,6 @@ router.use(protect);
 const isObjId = (s) => mongoose.isValidObjectId(s);
 const ALLOWED_TYPES = ["dress", "suit", "pants", "shirt", "other"];
 
-// Tikuvchilar ro'yxati endi ochiq /api/tailors da (routes/tailors.js)
-
-// ─── MIJOZ: YANGI BUYURTMA ─────────────────────────────────────────────
 router.post("/", requireRole("customer"), async (req, res, next) => {
   try {
     const { tailorId, clothingType, notes, measurementId } = req.body;
@@ -51,7 +41,6 @@ router.post("/", requireRole("customer"), async (req, res, next) => {
     const m = await Measurement.findOne({ _id: measurementId, user: req.user._id });
     if (!m) return res.status(404).json({ error: "O'lchov topilmadi" });
 
-    // O'lchov snapshotini markazlashgan maydon ro'yxatidan quramiz
     const snapshot = {};
     for (const key of MEASUREMENT_KEYS) snapshot[key] = m[key];
 
@@ -77,7 +66,6 @@ router.post("/", requireRole("customer"), async (req, res, next) => {
   } catch (err) { next(err); }
 });
 
-// ─── MIJOZ: MENING BUYURTMALARIM ───────────────────────────────────────
 router.get("/mine", requireRole("customer"), async (req, res, next) => {
   try {
     const items = await Order.find({ customer: req.user._id })
@@ -87,7 +75,6 @@ router.get("/mine", requireRole("customer"), async (req, res, next) => {
   } catch (err) { next(err); }
 });
 
-// ─── TIKUVCHI: KELGAN BUYURTMALAR ──────────────────────────────────────
 router.get("/tailor/incoming", requireRole("tailor"), async (req, res, next) => {
   try {
     const { status } = req.query;
@@ -102,7 +89,6 @@ router.get("/tailor/incoming", requireRole("tailor"), async (req, res, next) => 
   } catch (err) { next(err); }
 });
 
-// ─── BITTA BUYURTMA (mijoz yoki tikuvchi) ──────────────────────────────
 router.get("/:id", async (req, res, next) => {
   try {
     if (!isObjId(req.params.id)) {
@@ -121,7 +107,6 @@ router.get("/:id", async (req, res, next) => {
   } catch (err) { next(err); }
 });
 
-// Status o'zgartiruvchi yordamchi
 async function changeStatus(req, res, next, { allowedFrom, newStatus, allowedRole, ownerField, extra = {}, notify }) {
   try {
     if (!isObjId(req.params.id)) return res.status(400).json({ error: "ID noto'g'ri" });
@@ -155,7 +140,6 @@ async function changeStatus(req, res, next, { allowedFrom, newStatus, allowedRol
   } catch (err) { next(err); }
 }
 
-// ─── TIKUVCHI: QABUL QILISH (narx belgilash bilan) ─────────────────────
 router.post("/:id/accept", requireRole("tailor"), (req, res, next) => {
   const extra = { acceptedAt: new Date() };
   const price = Number(req.body.price);
@@ -177,7 +161,6 @@ router.post("/:id/accept", requireRole("tailor"), (req, res, next) => {
   });
 });
 
-// ─── TIKUVCHI: RAD ETISH ───────────────────────────────────────────────
 router.post("/:id/reject", requireRole("tailor"), (req, res, next) =>
   changeStatus(req, res, next, {
     allowedFrom: ["pending"],
@@ -193,7 +176,6 @@ router.post("/:id/reject", requireRole("tailor"), (req, res, next) =>
   })
 );
 
-// ─── TIKUVCHI: TAYYOR ──────────────────────────────────────────────────
 router.post("/:id/complete", requireRole("tailor"), (req, res, next) =>
   changeStatus(req, res, next, {
     allowedFrom: ["accepted"],
@@ -210,7 +192,6 @@ router.post("/:id/complete", requireRole("tailor"), (req, res, next) =>
   })
 );
 
-// ─── MIJOZ: BEKOR QILISH ───────────────────────────────────────────────
 router.post("/:id/cancel", requireRole("customer"), (req, res, next) =>
   changeStatus(req, res, next, {
     allowedFrom: ["pending"],
@@ -226,7 +207,6 @@ router.post("/:id/cancel", requireRole("customer"), (req, res, next) =>
   })
 );
 
-// ─── CHAT: xabarlar tarixi ─────────────────────────────────────────────
 router.get("/:id/messages", async (req, res, next) => {
   try {
     if (!isObjId(req.params.id)) return res.status(400).json({ error: "ID noto'g'ri" });
@@ -243,7 +223,6 @@ router.get("/:id/messages", async (req, res, next) => {
   } catch (err) { next(err); }
 });
 
-// ─── CHAT: REST orqali xabar yuborish (socket ishlamasa zaxira) ─────────
 router.post("/:id/messages", async (req, res, next) => {
   try {
     if (!isObjId(req.params.id)) return res.status(400).json({ error: "ID noto'g'ri" });
@@ -265,11 +244,9 @@ router.post("/:id/messages", async (req, res, next) => {
       createdAt: msg.createdAt,
     };
 
-    // Onlayn ishtirokchilarga real-time tarqatish
     const io = req.app.get("io");
     if (io) io.to(`order:${order._id}`).emit("message:new", payload);
 
-    // Ikkinchi ishtirokchiga bildirishnoma
     const recipient = order.customer.toString() === req.user._id.toString() ? order.tailor : order.customer;
     await createNotification(io, {
       user: recipient,
@@ -283,7 +260,6 @@ router.post("/:id/messages", async (req, res, next) => {
   } catch (err) { next(err); }
 });
 
-// ─── TIKUVCHI: tayyor ish rasmini yuklash ──────────────────────────────
 router.post("/:id/result", requireRole("tailor"), async (req, res, next) => {
   try {
     if (!isObjId(req.params.id)) return res.status(400).json({ error: "ID noto'g'ri" });
